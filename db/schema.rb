@@ -11,6 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20131116131141) do
+
+  create_table "photos", force: true do |t|
+    t.integer  "instagram_id"
+    t.string   "image_low_resolution"
+    t.string   "image_thumbnail"
+    t.string   "image_standard_resolution"
+    t.string   "instagram_url"
+    t.text     "instagram_body_req"
+    t.text     "google_places_body_req"
+    t.string   "place_name"
+    t.string   "address"
+    t.integer  "latitude"
+    t.integer  "longitude"
+    t.string   "tags"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "photos", ["instagram_id"], name: "index_photos_on_instagram_id"
 
 end
