@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131117064750) do
+ActiveRecord::Schema.define(version: 20131117082021) do
 
   create_table "photos", force: true do |t|
     t.integer  "instagram_id"
@@ -20,17 +20,15 @@ ActiveRecord::Schema.define(version: 20131117064750) do
     t.string   "image_standard_resolution"
     t.string   "instagram_url"
     t.text     "instagram_body_req"
-    t.text     "google_places_body_req"
-    t.string   "place_name"
-    t.string   "address"
-    t.integer  "latitude"
-    t.integer  "longitude"
     t.string   "tags"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "checked",                   default: false
+    t.integer  "place_id"
   end
 
   add_index "photos", ["instagram_id"], name: "index_photos_on_instagram_id"
+  add_index "photos", ["place_id"], name: "index_photos_on_place_id"
 
   create_table "places", force: true do |t|
     t.integer  "google_id"

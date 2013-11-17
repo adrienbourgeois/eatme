@@ -82,6 +82,27 @@ class InstagramService
     end
   end
 
+  def self.update_photo_place
+    Photo.all.each do |photo|
+      instagram_body_req = JSON.parse photo['instagram_body_req']
+      latitude = instagram_body_req['location']['latitude']
+      longitude = instagram_body_req['location']['longitude']
+      place_name = instagram_body_req['location']['name']
+
+
+      google_response = google_find place_name, latitude, longitude
+      puts google_response
+      if google_response
+        place = Place.find_by(google_id: google_response[:google_id])
+        if !place
+          puts "========Problem!!"
+        else
+          photo.update_attribute(:checked, true)
+          photo.update_attribute(:place_id, place.id)
+        end
+      end
+    end
+  end
 
   def self.script
 
@@ -161,4 +182,5 @@ end
 #InstagramService.destroy_doublon
 
 
-InstagramService.find_places
+#InstagramService.find_places
+InstagramService.update_photo_place
