@@ -38,25 +38,57 @@ class InstagramService
     Photo.find_by(instagram_id: instagram_id) == nil
   end
 
-  def self.google_find place_name, latitude, longitude
-    spots = @client.spots(latitude, longitude, radius: 100,
-                          types: ['restaurant','food','cafe','hotel'],
-                          name: place_name)
-
-    spots.each do |spot|
-      return spot.vicinity if spot.name.capitalize == place_name.capitalize
-    end
-    return nil
-  end
 
   API_KEY = 'AIzaSyBoOYKjtORixe_wELz_I5bK97AwR9yz2TM'
+  @client = GooglePlaces::Client.new(API_KEY)
+
+  def self.google_find place_name, latitude, longitude
+    spots = @client.spots(latitude, longitude, radius: 100,
+                          types: ['restaurant','food','cafe','hotel','establishment','bar'],
+                          name: place_name)
+    if spots.count == 1
+      spot = spots[0]
+      google_id = spot.id[0..12].to_i(26)
+      {
+        vicinity: spot.vicinity,
+        name: spot.name,
+        types: spot.types.to_s,
+        latitude: spot.lat,
+        longitude: spot.lng,
+        google_id: google_id
+      }
+    else
+      nil
+    end
+  end
+
+  def self.find_places
+    Photo.all.each do |photo|
+
+      instagram_body_req = JSON.parse photo['instagram_body_req']
+      latitude = instagram_body_req['location']['latitude']
+      longitude = instagram_body_req['location']['longitude']
+      place_name = instagram_body_req['location']['name']
+
+      google_response = google_find place_name, latitude, longitude
+      puts google_response
+      if google_response
+        place = Place.find_by(google_id: google_response[:google_id])
+        if !place
+          Place.create(google_response)
+        end
+      end
+
+    end
+  end
+
+
   def self.script
+
     Instagram.configure do |config|
       config.client_id = "c35bc560cef94c148dcf2c48cdc4c31d"
       config.client_secret = "9e951e5f4983466f855d14e1af5fc2fe"
     end
-
-    @client = GooglePlaces::Client.new(API_KEY)
 
     puts in_sydney?(-33.863687, 151.209083)
 
@@ -79,7 +111,7 @@ class InstagramService
 
             if is_not_in_db? instagram_id
               place_name = result['location']['name']
-              address = google_find place_name, latitude, longitude
+              address = nil#google_find place_name, latitude, longitude
               #if address
               image_low_resolution = result['images']['low_resolution']['url']
               image_thumbnail = result['images']['thumbnail']['url']
@@ -114,7 +146,6 @@ class InstagramService
       sleep 30
     end
   end
-
 end
 
 #InstagramService.script
@@ -127,4 +158,7 @@ end
 
 #InstagramService.update_instagram_id
 
-InstagramService.destroy_doublon
+#InstagramService.destroy_doublon
+
+
+InstagramService.find_places

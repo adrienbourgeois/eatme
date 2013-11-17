@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131116131141) do
+ActiveRecord::Schema.define(version: 20131117064750) do
 
   create_table "photos", force: true do |t|
     t.integer  "instagram_id"
@@ -31,5 +31,19 @@ ActiveRecord::Schema.define(version: 20131116131141) do
   end
 
   add_index "photos", ["instagram_id"], name: "index_photos_on_instagram_id"
+
+  create_table "places", force: true do |t|
+    t.integer  "google_id"
+    t.string   "name"
+    t.string   "types"
+    t.string   "vicinity"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "places", ["google_id"], name: "index_places_on_google_id"
+  add_index "places", ["name"], name: "index_places_on_name"
 
 end
