@@ -1,0 +1,70 @@
+// Place all the styles related to the photos controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@font-face {
+  font-family: 'Billabong';
+  src: url(<%= asset_path 'Billabong.ttf' %>);
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1 {
+  font-family: 'Billabong', sans-serif;
+  font-size: 8vw;
+  text-shadow: 0px 3px 0px #000;
+  margin: 0;
+  padding: 0;
+  color: rgb(200,200,200);
+}
+
+h2 {
+  font-family: 'Billabong', sans-serif;
+  font-size: 4vw;
+}
+
+#text_fa {
+  vertical-align: center;
+}
+
+.fa {
+  color: #722724;
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+body {
+  background-color: rgb(2,17,24);
+  //background-color: #000000;
+}
+
+.container {
+  padding: 30px 30px 0px 30px;
+  background-image: url(<%= image_path 'noise-black.png' %>);
+}
+
+.title {
+  padding: 5px 20px 5px 80px;
+  background-color: rgb(33,44,80);
+  box-shadow: 10px 10px  5px #000;
+  margin-bottom: 30px;
+}
+
+#time {
+  text-align: right;
+}
+
+#food_picture {
+  text-align: left;
+  margin: 0 0 30px 0;
+  width: 700px;
+  background-color: #000000;
+  padding: 30px 30px 50px 30px;
+  border-radius: 20px;
+  h2{
+    color: rgb(180,180,180);
+  }
+}
+
+

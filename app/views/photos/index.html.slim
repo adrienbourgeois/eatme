@@ -1,0 +1,28 @@
+center
+  h1
+    | Recently eaten in Sydney
+br
+br
+- @photos.each do |photo|
+  - place = Place.find(photo.place_id)
+  .row
+    center
+      #food_picture
+        = image_tag photo.image_standard_resolution
+        br
+        h2
+          = place.name
+        .row
+          .col-md-3
+            a href="#{photo.instagram_url}" target="_blank"
+              i.fa.fa-instagram.fa-3x
+            '&nbsp;&nbsp;&nbsp;
+            a href="#"
+              i.fa.fa-map-marker.fa-3x
+          .col-md-9
+            #time
+              = minutes_ago photo.updated_at
+              br
+              .fa
+                = place.vicinity
+

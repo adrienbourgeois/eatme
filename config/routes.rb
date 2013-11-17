@@ -3,6 +3,8 @@ Showmeurfood::Application.routes.draw do
   get 'pages/home'
   root 'pages#home'
 
+  resources :photos
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

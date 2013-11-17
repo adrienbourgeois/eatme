@@ -1,5 +1,7 @@
 class InstagramService
 
+
+
   def self.update_instagram_id
     Photo.all.each do |photo|
       photo_info = JSON.parse photo.instagram_body_req
@@ -132,34 +134,43 @@ class InstagramService
 
             if is_not_in_db? instagram_id
               place_name = result['location']['name']
-              address = nil#google_find place_name, latitude, longitude
-              #if address
               image_low_resolution = result['images']['low_resolution']['url']
               image_thumbnail = result['images']['thumbnail']['url']
               image_standard_resolution = result['images']['standard_resolution']['url']
               instagram_url = result['link']
               instagram_body_req = result.to_json
               tags = result['tags'].to_s
+
               puts result[:link]
               puts place_name
-              puts address
 
-              Photo.create( latitude: latitude,
-                           longitude: longitude,
-                           place_name: place_name,
-                           address: address,
+              google_response = google_find place_name, latitude, longitude
+              checked = google_response ? true : false
+              place_id = 0
+
+              if google_response
+                puts google_response
+                place = Place.find_by(google_id: google_response[:google_id])
+                place = Place.create(google_response) unless place
+                place_id = place.id
+              end
+
+
+
+              Photo.create(
                            instagram_id: instagram_id,
                            image_low_resolution: image_low_resolution,
                            image_thumbnail: image_thumbnail,
                            image_standard_resolution: image_standard_resolution,
                            instagram_url: instagram_url,
                            instagram_body_req: instagram_body_req,
-                           tags: tags
+                           tags: tags,
+                           place_id: place_id,
+                           checked: checked
                           )
             end
 
             puts "id: #{count}"
-            #end
           end
         end
         count += 1
@@ -169,7 +180,7 @@ class InstagramService
   end
 end
 
-#InstagramService.script
+InstagramService.script
 
 #puts InstagramService.is_not_in_db? 590936166465201281
 #puts InstagramService.is_not_in_db? 590937478780558384
@@ -183,4 +194,4 @@ end
 
 
 #InstagramService.find_places
-InstagramService.update_photo_place
+#InstagramService.update_photo_place
