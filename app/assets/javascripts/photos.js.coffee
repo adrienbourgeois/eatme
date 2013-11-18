@@ -7,8 +7,8 @@ marker = null
 latitude = 0
 longitude = 0
 
-initialize = (lat, lng) ->
-  myLatlng = new google.maps.LatLng(lat, lng)
+initialize = ->
+  myLatlng = new google.maps.LatLng(latitude, longitude)
   mapOptions =
     center: myLatlng
     zoom: 16
@@ -29,6 +29,5 @@ $ ->
   $("a.show_map").on "click", ->
     latitude = $(this).data("latitude")
     longitude = $(this).data("longitude")
-    google.maps.event.addDomListener window, "load", initialize(latitude, longitude)
-
+    google.maps.event.addDomListener window, "load", initialize()
 

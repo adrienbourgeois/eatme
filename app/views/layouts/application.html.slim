@@ -7,6 +7,36 @@ html
     = csrf_meta_tags
     script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"
   body
+    nav.navbar.navbar-default.navbar-fixed-top.navbar-inverse role="navigation"
+      /! Brand and toggle get grouped for better mobile display
+      .navbar-header
+        button.navbar-toggle data-target=".navbar-ex1-collapse" data-toggle="collapse" type="button"
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        = link_to 'FoodPorn', root_path, class:'navbar-brand glyphicon glyphicon-home'
+
+      .collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li
+            = link_to 'Just eaten!', photos_path
+          li
+            a href='#'
+              |hello
+      /! Collect the nav links, forms, and other content for toggling
+    .title
+      h1
+        | Recently eaten in Sydney
     .container
       = yield
+
+    #footer
+      h2
+        | Adrien Bourgeois
+      a href="http://github.com/adrienbourgeois"
+        i.fa.fa-github.fa-3x
+      '&nbsp;&nbsp;&nbsp;
+      a href="http://www.linkedin.com/profile/view?id=275306732"
+        i.fa.fa-linkedin.fa-3x
 
