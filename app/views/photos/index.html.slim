@@ -3,6 +3,20 @@ center
     | Recently eaten in Sydney
 br
 br
+
+#myModal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog
+    #map-canvas
+    .modal-content
+      /.modal-header
+        /button.close aria-hidden="true" data-dismiss="modal" type="button"
+        /h4#myModalLabel.modal-title Modal title
+      /.modal-body
+      /.modal-footer
+        /button.btn.btn-default data-dismiss="modal" type="button"
+        /button.btn.btn-primary type="button"
+
+
 - @photos.each do |photo|
   - place = Place.find(photo.place_id)
   .row
@@ -17,7 +31,7 @@ br
             a href="#{photo.instagram_url}" target="_blank"
               i.fa.fa-instagram.fa-3x
             '&nbsp;&nbsp;&nbsp;
-            a href="#"
+            a.show_map href="#" data-toggle="modal" data-target="#myModal" data-latitude="#{place.latitude}" data-longitude="#{place.longitude}" data-place_name="#{place.name}"
               i.fa.fa-map-marker.fa-3x
           .col-md-9
             #time
