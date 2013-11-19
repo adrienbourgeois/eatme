@@ -15,6 +15,7 @@ gem 'google_places'
 
 # Use sqlite3 as the database for Active Record
 group :development, :test do
+  gem 'pg', '0.15.1'
   gem 'sqlite3'
   gem 'rspec-rails', '~> 2.13.1'
 end
