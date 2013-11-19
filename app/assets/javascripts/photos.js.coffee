@@ -6,6 +6,7 @@ map = null
 marker = null
 latitude = 0
 longitude = 0
+page = 2
 
 ##################################################################################
 
@@ -49,20 +50,12 @@ $ ->
 
   $("#more").on "click", (event) ->
     event.preventDefault()
-    appendToCol(0,$("<p>Adrizzzz</p>"))
 
     $.ajax
-      url: "/photos"
+      url: "/photos?page=#{page}"
       dataType: "json"
       contentType: "application/json"
       success: (ret) ->
-        console.log ret
-        obj = $("<ul></ul>")
-        obj.append($("<li>Adrien</li>"))
-        appendToCol(1,obj)
-
-        console.log ret.length
-
         for i in [0..ret.length-1] by 1
           food_picture = $("<div id='food_picture'></div>")
           image = $("<img src=#{ret[i]['image_low_resolution']}></img><br>")
@@ -85,6 +78,7 @@ $ ->
           food_picture.append(row)
           appendToCol(i%3,food_picture)
 
+        page++
         show_map_listener()
 
             #.row
