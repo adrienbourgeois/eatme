@@ -16,26 +16,25 @@
     .col-md-4 id="col#{i}"
       - @photos.each_slice(3) do |photos_a|
         - photo = photos_a[i]
-        - place = Place.find(photo.place_id)
         center
           #food_picture
             = image_tag photo.image_low_resolution
             br
             h3
-              = place.name
+              = photo.place.name
             .row
               .col-md-6
                 a href="#{photo.instagram_url}" target="_blank"
                   i.fa.fa-instagram.fa-3x
                 '&nbsp;&nbsp;&nbsp;
-                a.show_map href="#" data-toggle="modal" data-target="#myModal" data-latitude="#{place.latitude}" data-longitude="#{place.longitude}" data-place_name="#{place.name}"
+                a.show_map href="#" data-toggle="modal" data-target="#myModal" data-latitude="#{photo.place.latitude}" data-longitude="#{photo.place.longitude}" data-place_name="#{photo.place.name}"
                   i.fa.fa-map-marker.fa-3x
               .col-md-6
                 #time
                   = minutes_ago photo.updated_at
                   br
                   .fa
-                    = place.vicinity
+                    = photo.place.vicinity
 
 center
   a#more href="#" data-page=2
