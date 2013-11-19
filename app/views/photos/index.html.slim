@@ -13,7 +13,7 @@
 
 .row
   - (0..2).each do |i|
-    .col-md-4
+    .col-md-4 id="col#{i}"
       - @photos.each_slice(3) do |photos_a|
         - photo = photos_a[i]
         - place = Place.find(photo.place_id)
@@ -36,4 +36,8 @@
                   br
                   .fa
                     = place.vicinity
+
+center
+  a#more href="#" data-page=2
+    |More
 

@@ -15,7 +15,7 @@ html
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        = link_to 'FoodPorn', root_path, class:'navbar-brand glyphicon glyphicon-home'
+        = link_to 'EatMe', root_path, class:'navbar-brand'
 
       .collapse.navbar-collapse
         ul.nav.navbar-nav
@@ -27,7 +27,8 @@ html
       /! Collect the nav links, forms, and other content for toggling
     .title
       h1
-        | Recently eaten in Sydney
+        = image_tag "instagram-icon.png", class:'logo'
+        |  Recently eaten in Sydney
     .container
       = yield
 
