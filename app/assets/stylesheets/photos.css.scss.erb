@@ -26,6 +26,13 @@
   }
 }
 
+.sydney {
+  background-image: url(<%= image_path 'sydney.jpg' %>);
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .navbar-brand {
   font-family: 'Billabong';
   font-size: 26px;
@@ -96,12 +103,19 @@ body {
   padding: 30px 30px 0px 30px;
 }
 
+.col-md-4 {
+  <%#padding: 30px;%>
+}
+
 .title {
   //background-image: url(<%= image_path 'noise-black.png' %>);
-  text-align: center;
-  padding: 90px 20px 35px 20px;
-  background-color: rgb(33,44,80);
+  <%#text-align: center;%>
+  padding: 105px 20px 50px 20px;
+  background-color: rgba(33,44,80,0.6);
   margin-bottom: 30px;
+  &:hover {
+    background-color: rgba(33,44,80,0.7);
+  }
 }
 
 #time {

@@ -11,30 +11,30 @@
         /button.btn.btn-default data-dismiss="modal" type="button"
         /button.btn.btn-primary type="button"
 
-.row
-  - (0..2).each do |i|
-    .col-md-4 id="col#{i}"
-      - @photos.each_slice(3) do |photos_a|
-        - photo = photos_a[i]
-        center
-          #food_picture
-            = image_tag photo.image_low_resolution
-            br
-            h3
-              = photo.place.name
-            .row
-              .col-md-6
-                a href="#{photo.instagram_url}" target="_blank"
-                  i.fa.fa-instagram.fa-3x
-                '&nbsp;&nbsp;&nbsp;
-                a.show_map href="#" data-toggle="modal" data-target="#myModal" data-latitude="#{photo.place.latitude}" data-longitude="#{photo.place.longitude}" data-place_name="#{photo.place.name}"
-                  i.fa.fa-map-marker.fa-3x
-              .col-md-6
-                #time
-                  = minutes_ago photo.updated_at
-                  br
-                  .fa
-                    = photo.place.vicinity
+div#photos_grid
+  - @photos.each_slice(3) do |photos|
+    .row
+      - photos.each do |photo|
+        .col-md-4
+          center
+            #food_picture
+              = image_tag photo.image_low_resolution
+              br
+              h3
+                = photo.place.name
+              .row
+                .col-md-6
+                  a href="#{photo.instagram_url}" target="_blank"
+                    i.fa.fa-instagram.fa-3x
+                  '&nbsp;&nbsp;&nbsp;
+                  a.show_map href="#" data-toggle="modal" data-target="#myModal" data-latitude="#{photo.place.latitude}" data-longitude="#{photo.place.longitude}" data-place_name="#{photo.place.name}"
+                    i.fa.fa-map-marker.fa-3x
+                .col-md-6
+                  #time
+                    = minutes_ago photo.updated_at
+                    br
+                    .fa
+                      = photo.place.vicinity
 
 center
   a#more href="#" data-page=2

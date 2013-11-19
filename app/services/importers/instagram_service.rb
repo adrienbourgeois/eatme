@@ -123,6 +123,8 @@ class InstagramService
       results += Instagram.tag_recent_media('instafood', { count: 100 })
       results += Instagram.tag_recent_media('food', { count: 100 })
       results += Instagram.tag_recent_media('foodpic', { count: 100 })
+      results += Instagram.tag_recent_media('foodstagram', { count: 100 })
+      results += Instagram.tag_recent_media('foodgasm', { count: 100 })
 
       puts "round##{count}"
       results.each do |result|
