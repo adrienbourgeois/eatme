@@ -46,7 +46,7 @@ class InstagramListener
 
   def self.google_find place_name, latitude, longitude
     spots = @client.spots(latitude, longitude, radius: 100,
-                          types: ['restaurant','food','cafe','hotel','establishment','bar'],
+                          types: ['restaurant','food','cafe','hotel','bar'],
                           name: place_name)
     if spots.count == 1
       spot = spots[0]
@@ -182,7 +182,7 @@ class InstagramListener
   end
 end
 
-#InstagramListener.script
+InstagramListener.script
 
 #puts InstagramService.is_not_in_db? 590936166465201281
 #puts InstagramService.is_not_in_db? 590937478780558384
