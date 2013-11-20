@@ -1,4 +1,4 @@
-class InstagramService
+class InstagramListener
 
 
 
@@ -182,7 +182,7 @@ class InstagramService
   end
 end
 
-#InstagramService.script
+InstagramListener.script
 
 #puts InstagramService.is_not_in_db? 590936166465201281
 #puts InstagramService.is_not_in_db? 590937478780558384
