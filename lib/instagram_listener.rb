@@ -1,8 +1,10 @@
-class InstagramListener
+module InstagramListener
+
+  MAX_EXECUTION_TIME = 570
+  ROUND_SLEEP_TIME = 10
 
 
-
-  def self.update_instagram_id
+  def update_instagram_id
     Photo.all.each do |photo|
       photo_info = JSON.parse photo.instagram_body_req
       new_id = photo_info['id'].split("_")[0].to_i
@@ -10,7 +12,7 @@ class InstagramListener
     end
   end
 
-  def self.destroy_doublon
+  def destroy_doublon
     Photo.all.each do |photo|
       instagram_id = photo.instagram_id
       Photo.all.where(instagram_id: instagram_id)[1..-1].each do |photo_b|
@@ -20,7 +22,7 @@ class InstagramListener
   end
 
 
-  def self.in_sydney? lat, long
+  def in_sydney? lat, long
     long_a = 150.847092
     long_b = 151.338730
     lat_a = -34.047637
@@ -28,7 +30,7 @@ class InstagramListener
     long_a < long && long < long_b && lat_a < lat && lat < lat_b
   end
 
-  def self.in_sf? lat, long
+  def in_sf? lat, long
     long_a = -123.060608
     long_b = -121.201172
     lat_a = 37.569209
@@ -36,7 +38,7 @@ class InstagramListener
     long_a < long && long < long_b && lat_a < lat && lat < lat_b
   end
 
-  def self.is_not_in_db? instagram_id
+  def is_not_in_db? instagram_id
     Photo.find_by(instagram_id: instagram_id) == nil
   end
 
@@ -44,7 +46,7 @@ class InstagramListener
   API_KEY = 'AIzaSyBoOYKjtORixe_wELz_I5bK97AwR9yz2TM'
   @client = GooglePlaces::Client.new(API_KEY)
 
-  def self.google_find place_name, latitude, longitude
+  def google_find place_name, latitude, longitude
     spots = @client.spots(latitude, longitude, radius: 100,
                           types: ['restaurant','food','cafe','hotel','bar'],
                           name: place_name)
@@ -64,7 +66,7 @@ class InstagramListener
     end
   end
 
-  def self.find_places
+  def find_places
     Photo.all.each do |photo|
 
       instagram_body_req = JSON.parse photo['instagram_body_req']
@@ -84,7 +86,7 @@ class InstagramListener
     end
   end
 
-  def self.update_photo_place
+  def update_photo_place
     Photo.all.each do |photo|
       instagram_body_req = JSON.parse photo['instagram_body_req']
       latitude = instagram_body_req['location']['latitude']
@@ -106,7 +108,9 @@ class InstagramListener
     end
   end
 
-  def self.script
+  def script
+
+    start = Time.now
 
     Instagram.configure do |config|
       config.client_id = "c35bc560cef94c148dcf2c48cdc4c31d"
@@ -116,7 +120,7 @@ class InstagramListener
     puts in_sydney?(-33.863687, 151.209083)
 
     count = 0
-    while true
+    while (Time.now - start).to_i < MAX_EXECUTION_TIME
 
       results = Instagram.tag_recent_media('foodporn', { count: 100 })
       results += Instagram.tag_recent_media('fooddie', { count: 100 })
@@ -177,12 +181,15 @@ class InstagramListener
         end
         count += 1
       end
-      sleep 30
+      puts "chrono: #{(Time.now-start).to_i/1.minute} min"
+      sleep ROUND_SLEEP_TIME
     end
   end
 end
+#include InstagramListener
 
-InstagramListener.script
+
+#InstagramListener.script
 
 #puts InstagramService.is_not_in_db? 590936166465201281
 #puts InstagramService.is_not_in_db? 590937478780558384
