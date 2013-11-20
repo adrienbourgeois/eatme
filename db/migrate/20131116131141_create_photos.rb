@@ -1,7 +1,7 @@
 class CreatePhotos < ActiveRecord::Migration
   def change
     create_table :photos do |t|
-      t.integer :instagram_id
+      t.integer :instagram_id, limit: 8
       t.string :image_low_resolution
       t.string :image_thumbnail
       t.string :image_standard_resolution
