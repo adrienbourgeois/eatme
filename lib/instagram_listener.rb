@@ -1,6 +1,6 @@
 module InstagramListener
 
-  MAX_EXECUTION_TIME = 570
+  MAX_EXECUTION_TIME = 3500
   ROUND_SLEEP_TIME = 10
 
 
