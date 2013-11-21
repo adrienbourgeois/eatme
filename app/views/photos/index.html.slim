@@ -15,7 +15,7 @@ div#photos_grid
   - @photos.each_slice(3) do |photos|
     .row
       - photos.each do |photo|
-        .col-sm-4
+        .col-md-4
           center
             .food_picture_container
               = image_tag photo.image_low_resolution, class:'food_picture'
