@@ -109,6 +109,7 @@ load_more_listener_off = ->
   $("#more").off "click"
 
 init = ->
+  page = 2
   console.log "hello"
   show_map_listener()
   load_more_listener_off()
