@@ -118,10 +118,10 @@ init = ->
     google.maps.event.trigger map, "resize"
     map.setCenter(new google.maps.LatLng(latitude, longitude))
 
-$(document).on "page:change", init
 
 $ ->
   init()
+  $(document).on "page:change", init
 
 
 
