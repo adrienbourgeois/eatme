@@ -4,6 +4,7 @@ Showmeurfood::Application.routes.draw do
   root 'pages#home'
 
   resources :photos
+  resources :places
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
