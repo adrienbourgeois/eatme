@@ -20,7 +20,8 @@ load_more_photos = (event) ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
-      if ret.length == 0
+      console.log "ret.length%3: #{ret.length%3}"
+      if ret.length%3 isnt 0 or ret.length is 0
         end = true
       console.log ret
       for j in [0..ret.length-1] by 3
@@ -87,6 +88,7 @@ initialize = ->
 show_map_listener = ->
   $("a.show_map").off "click", ->
   $("a.show_map").on "click", ->
+    console.log "fuck that"
     latitude = $(this).data("latitude")
     longitude = $(this).data("longitude")
     google.maps.event.addDomListener window, "load", initialize()
@@ -106,14 +108,19 @@ load_more_listener_off = ->
   $(window).unbind("scroll",load_more_photos_when_page_bottom_reached)
   $("#more").off "click"
 
-$ ->
-
+init = ->
+  console.log "hello"
   show_map_listener()
   load_more_listener_on()
 
   $("#myModal").on "shown.bs.modal", ->
     google.maps.event.trigger map, "resize"
     map.setCenter(new google.maps.LatLng(latitude, longitude))
+
+$ ->
+  init()
+  $(document).on "page:change", init
+
 
 
 
