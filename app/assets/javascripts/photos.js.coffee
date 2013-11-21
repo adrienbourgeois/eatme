@@ -111,15 +111,18 @@ load_more_listener_off = ->
 init = ->
   console.log "hello"
   show_map_listener()
+  load_more_listener_off()
   load_more_listener_on()
 
   $("#myModal").on "shown.bs.modal", ->
     google.maps.event.trigger map, "resize"
     map.setCenter(new google.maps.LatLng(latitude, longitude))
 
+$(document).on "page:change", init
+
 $ ->
   init()
-  $(document).on "page:change", init
+
 
 
 
