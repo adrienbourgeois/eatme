@@ -27,8 +27,8 @@ load_more_photos = (event) ->
       for j in [0..ret.length-1] by 3
         main_row = $("<div class='row'></div>")
         for i in [j..j+2]
-          food_picture = $("<div id='food_picture'></div>")
-          image = $("<img src=#{ret[i]['image_low_resolution']}></img><br>")
+          food_picture = $("<div class='food_picture_container'></div>")
+          image = $("<img src=#{ret[i]['image_low_resolution']} class='food_picture'></img><br>")
           food_picture.append(image)
           titre = $("<h3>#{ret[i]['place']['name']}</h3>")
           food_picture.append(titre)
