@@ -1,7 +1,7 @@
 Showmeurfood::Application.routes.draw do
 
   get 'pages/home'
-  root 'pages#home'
+  root 'photos#index'
 
   resources :photos
   resources :places
