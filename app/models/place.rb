@@ -1,5 +1,6 @@
 class Place < ActiveRecord::Base
   has_many :photos
+  geocoded_by :latitude  => :latitude, :longitude => :longitude
 
   def self.popular_places
     popular_places_array = []

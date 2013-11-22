@@ -1,0 +1,10 @@
+h2
+  = @place.name
+p
+  = @place.vicinity
+
+- @place.photos.each do |photo|
+  = image_tag photo.image_standard_resolution
+  br
+
+

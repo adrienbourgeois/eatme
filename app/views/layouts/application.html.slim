@@ -19,9 +19,11 @@ html
       .collapse.navbar-collapse
         ul.nav.navbar-nav
           li
-            = link_to 'Just Eaten!', photos_path
+            = link_to 'Close Places', "#{places_path}?page=close_places"
           li
-            = link_to 'Popular Places', places_path
+            = link_to 'Popular Places', "#{places_path}?page=popular"
+          li
+            = link_to 'Just Eaten!', photos_path
       /! Collect the nav links, forms, and other content for toggling
     .sydney
       .title

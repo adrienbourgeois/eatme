@@ -12,6 +12,7 @@ gem "font-awesome-rails", '~> 4.0.3.0'
 
 gem 'instagram'
 gem 'google_places'
+gem 'geocoder'
 
 # Use sqlite3 as the database for Active Record
 group :development, :test do
