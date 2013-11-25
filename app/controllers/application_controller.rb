@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :prepare_for_mobile
+  #before_filter :prepare_for_mobile
 
   private
 
@@ -18,6 +18,6 @@ class ApplicationController < ActionController::Base
 
   def prepare_for_mobile
     #session[:mobile_param] = params[:mobile] if params[:mobile]
-    request.format = :mobile if request.format == :html and mobile_device?
+    #request.format = :mobile if request.format == :html and mobile_device?
   end
 end
