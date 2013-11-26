@@ -26,16 +26,16 @@ load_more_photos = () ->
       for i in [0..ret.length-1]
         li = $("<li></li>")
         image = $("<img src=#{ret[i]['image_low_resolution']}></img><br>")
-        titre = $("<h2>#{ret[i]['place']['name']}</h2>")
-        link2 = $("<button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button>")
+        titre = $("<h1>#{ret[i]['place']['name']}</h1>")
+        link2 = $("<div class='time'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
 
           #<a href='#' class='show_map' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><i class='fa fa-map-marker fa-3x'></i></a>")
-        minutes_ago = $("<span>#{ret[i]['updated_at']}</span>")
+        minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
         vicinity = $("<p>#{ret[i]['place']['vicinity']}</p>")
         li. append titre
         li.append image
+        li.append minutes_ago
         li.append link2
-        #li.append minutes_ago
         li.append vicinity
         $("ul.edgetoedge#gallery").append li
 
