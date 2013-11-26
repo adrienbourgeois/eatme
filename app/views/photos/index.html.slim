@@ -10,6 +10,13 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
 
 
 #jqt
+  #close_places.edgetoedge
+    .toolbar
+      h1 Close Places
+      a class="button slideup" id="infoButton" href="#home"
+        |Menu
+    ul.edgetoedge#close_places
+
   #home.edgetoedge
     .toolbar
       h1 EatMe
@@ -23,20 +30,10 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       li
         a href="#about"
           |About
-  #close_places.edgetoedge
-    .toolbar
-      h1 Close Places
-      a href="#" class="back button"
-        |Back
-      a class="button slideup" id="infoButton" href="#home"
-        |Menu
-    ul.edgetoedge#close_places
 
   #just_eaten.edgetoedge
     .toolbar
       h1 Just Eaten
-      a href="#" class="back button"
-        |Back
       a class="button slideup" id="infoButton" href="#home"
         |Menu
     ul.edgetoedge#gallery
@@ -45,8 +42,8 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
           /= image_tag photo.image_low_resolution
   #about.edgetoedge
     .toolbar
-      a href="#" class="back button"
-        |Back
+      a class="button slideup" id="infoButton" href="#home"
+        |Menu
       h1 About
     ul.edgetoedge
       li
