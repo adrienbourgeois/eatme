@@ -8,6 +8,7 @@ latitude = 0
 longitude = 0
 page = 1
 end = false
+first_time = true
 
 getDocHeight = ->
   D = document
@@ -20,6 +21,8 @@ load_more_photos = () ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
+      if window.location.hash != "#just_eaten"
+        return true
       if ret.length%3 isnt 0 or ret.length is 0
         end = true
 
@@ -115,18 +118,18 @@ load_more_photos_when_page_bottom_reached = ->
 
 load_more_listener_on = ->
   $(window).bind("scroll",load_more_photos_when_page_bottom_reached)
-  $("#more").on "click", (event) ->
-    load_more_photos(event)
+  #$("#more").on "click", (event) ->
+    #load_more_photos(event)
 
 load_more_listener_off = ->
   $(window).unbind("scroll",load_more_photos_when_page_bottom_reached)
-  $("#more").off "click"
+  #$("#more").off "click"
 
 just_eaten = ->
   page_name = $("span.page").data("page_name")
   if page_name is "just_eaten"
     page = 2
-    show_map_listener()
+    #show_map_listener()
     load_more_listener_off()
     load_more_listener_on()
 
@@ -136,7 +139,7 @@ just_eaten = ->
 
 init = ->
   just_eaten()
-  get_location()
+  #get_location()
 
 get_location = ->
   page_name = $("span.page").data("page_name")
@@ -148,8 +151,12 @@ get_location = ->
       alert "Impossible to find your location"
 
 $ ->
-  init()
-  #$(document).on "page:change", init
+  if first_time
+    init()
+    first_time = false
+
+  #$(document).on "page:change", ->
+    #console.log window.location.pathname
   #load_more_photos()
 
 
