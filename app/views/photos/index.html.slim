@@ -1,5 +1,29 @@
 span.page data-page_name="just_eaten"
 script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"
+#jqt
+  #home.edgetoedge
+    .toolbar
+      h1 Just Eaten
+      /! <a class="button slideup" id="infoButton" href="#about">About</a>
+    ul.edgetoedge
+      li
+        a href="#about"
+          |About
+      - @photos.each do |photo|
+        li
+          = image_tag photo.image_low_resolution
+  #about.edgetoedge
+    .toolbar
+      a href="#" class="back button"
+        |Back
+      h1 About
+    ul.edgetoedge
+      li
+        p
+          |Adrien Bourgeois
+        p
+          |LinkedIn
+
 #myModal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
   .modal-dialog
     #map-canvas
