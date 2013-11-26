@@ -28,18 +28,18 @@ load_more_photos = () ->
 
       for i in [0..ret.length-1]
         li = $("<li></li>")
-        image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center><br>")
+        image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center>")
         titre = $("<h3>#{ret[i]['place']['name']}</h3>")
-        link2 = $("<div class='time'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
+        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
 
           #<a href='#' class='show_map' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><i class='fa fa-map-marker fa-3x'></i></a>")
         minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
-        vicinity = $("<p>#{ret[i]['place']['vicinity']}</p>")
+        vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
         li. append titre
         li.append image
         li.append minutes_ago
-        li.append link2
         li.append vicinity
+        li.append link2
         $("ul.edgetoedge#gallery").append li
 
       #for j in [0..ret.length-1] by 3
@@ -169,8 +169,8 @@ get_location = ->
             for j in [0..ret[i]['photos'].length-1]
               image = $("<img src=\"#{ret[i]['photos'][j]['image_low_resolution']}\"></img>")
               center.append(image)
-            link2 = $("<div class='time'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
-            vicinity = $("<p>#{ret[i]['vicinity']}</p>")
+            link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
+            vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
             li.append(center)
             li.append(vicinity)
             li.append(link2)
