@@ -6,6 +6,8 @@ map = null
 marker = null
 latitude = 0
 longitude = 0
+latitude_user = 0
+longitude_user = 0
 page = 1
 end = false
 first_time = true
@@ -143,7 +145,7 @@ init = ->
 
 get_close_places = (rayon) ->
   $.ajax
-    url: "/places?latitude=#{latitude}&longitude=#{longitude}&rayon=#{rayon}"
+    url: "/places?latitude=#{latitude_user}&longitude=#{longitude_user}&rayon=#{rayon}"
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
@@ -173,11 +175,11 @@ get_location = ->
   #if page_name is "places_finder"
   if(navigator.geolocation)
     navigator.geolocation.getCurrentPosition (position) ->
-      latitude = position.coords.latitude
-      longitude = position.coords.longitude
+      latitude_user = position.coords.latitude
+      longitude_user = position.coords.longitude
       console.log "#{latitude},#{longitude}"
-      #latitude = -33.867589
-      #longitude = 151.208611
+      #latitude_user = -33.867589
+      #longitude_user = 151.208611
       get_close_places(0.3)
   else
     alert "Impossible to find your location"
