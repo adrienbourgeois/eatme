@@ -15,11 +15,23 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       h1 EatMe
     ul.edgetoedge
       li
+        a href="#close_places"
+          |Close Places
+      li
         a href="#just_eaten"
           |Just Eaten
       li
         a href="#about"
           |About
+  #close_places.edgetoedge
+    .toolbar
+      h1 Close Places
+      a href="#" class="back button"
+        |Back
+      a class="button slideup" id="infoButton" href="#home"
+        |Menu
+    ul.edgetoedge#close_places
+
   #just_eaten.edgetoedge
     .toolbar
       h1 Just Eaten
