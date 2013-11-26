@@ -25,12 +25,6 @@ preloadImages: [
 ]
 });
 // Add an onload function
-$(function(){
-    // Dynamically set next page titles after clicking certain links
-    $('#home ul a, #mailbox ul a').click(function(){
-      $( $(this).attr('href') + ' h1' ).html($(this).html());
-      });
-    });
 </script>
 <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
