@@ -6,7 +6,7 @@ map = null
 marker = null
 latitude = 0
 longitude = 0
-page = 2
+page = 1
 end = false
 
 getDocHeight = ->
@@ -27,7 +27,9 @@ load_more_photos = () ->
         li = $("<li></li>")
         image = $("<img src=#{ret[i]['image_low_resolution']}></img><br>")
         titre = $("<h2>#{ret[i]['place']['name']}</h2>")
-        link2 = $("<a href='#' class='show_map' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><i class='fa fa-map-marker fa-3x'></i></a>")
+        link2 = $("<button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button>")
+
+          #<a href='#' class='show_map' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><i class='fa fa-map-marker fa-3x'></i></a>")
         minutes_ago = $("<span>#{ret[i]['updated_at']}</span>")
         vicinity = $("<p>#{ret[i]['place']['vicinity']}</p>")
         li. append titre
@@ -66,12 +68,12 @@ load_more_photos = () ->
       page++
       show_map_listener()
     beforeSend: ->
-      #load_more_listener_off()
+      load_more_listener_off()
       #$(".pretty_button").find("span").remove()
       #spinner = $("<img src='assets/spiffygif_30x30.gif'></img>")
       #$(".pretty_button").append(spinner)
     complete: ->
-      #load_more_listener_on()
+      load_more_listener_on()
       #button_text = $("<span>More</span>")
       #$(".pretty_button").append(button_text)
       #$(".pretty_button").find("img").remove()
@@ -99,8 +101,8 @@ initialize = ->
 ##################################################################################
 
 show_map_listener = ->
-  $("a.show_map").off "click", ->
-  $("a.show_map").on "click", ->
+  $("button.show_map").off "click", ->
+  $("button.show_map").on "click", ->
     latitude = $(this).data("latitude")
     longitude = $(this).data("longitude")
     google.maps.event.addDomListener window, "load", initialize()
@@ -108,7 +110,7 @@ show_map_listener = ->
 ##################################################################################
 
 load_more_photos_when_page_bottom_reached = ->
-  if $(window).height() + $(window).scrollTop()is getDocHeight()
+  if $(window).height() + $(window).scrollTop() - getDocHeight() > -200
     load_more_photos(event)
 
 load_more_listener_on = ->
@@ -146,9 +148,9 @@ get_location = ->
       alert "Impossible to find your location"
 
 $ ->
-  #init()
+  init()
   #$(document).on "page:change", init
-  load_more_photos()
+  #load_more_photos()
 
 
 

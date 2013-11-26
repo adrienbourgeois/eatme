@@ -28,10 +28,6 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       a class="button slideup" id="infoButton" href="#home"
         |Menu
     ul.edgetoedge#gallery
-      li
-        a href="#" data-toggle="modal" data-target="#myModal" data-latitude="-33" data-longitude="151"
-          |MAP
-
       /- @photos.each do |photo|
         /li
           /= image_tag photo.image_low_resolution
