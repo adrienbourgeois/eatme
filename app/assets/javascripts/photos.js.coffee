@@ -141,6 +141,33 @@ init = ->
   just_eaten()
   get_location()
 
+get_close_places = (rayon) ->
+  $.ajax
+    url: "/places?latitude=#{latitude}&longitude=#{longitude}&rayon=#{rayon}"
+    dataType: "json"
+    contentType: "application/json"
+    success: (ret) ->
+     $("ul.edgetoedge#close_places").find("li").remove()
+     if ret.length == 0
+      li = $("<li><center><p>No results found</p></center></li>")
+      $("ul.edgetoedge#close_places").append(li)
+     else
+      for i in [0..ret.length-1]
+        li = $("<li></li>")
+        name = $("<h3>#{ret[i]['name']}</h3>")
+        li.append(name)
+        center = $("<center></center>")
+        for j in [0..ret[i]['photos'].length-1]
+          image = $("<img src=\"#{ret[i]['photos'][j]['image_low_resolution']}\"></img>")
+          center.append(image)
+        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
+        vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
+        li.append(center)
+        li.append(vicinity)
+        li.append(link2)
+        $("ul.edgetoedge#close_places").append(li)
+      show_map_listener()
+
 get_location = ->
   #page_name = $("span.page").data("page_name")
   #if page_name is "places_finder"
@@ -151,31 +178,7 @@ get_location = ->
       console.log "#{latitude},#{longitude}"
       #latitude = -33.867589
       #longitude = 151.208611
-      $.ajax
-        url: "/places?latitude=#{latitude}&longitude=#{longitude}"
-        dataType: "json"
-        contentType: "application/json"
-        success: (ret) ->
-         console.log ret
-         if ret.length == 0
-          li = $("<li><center><p>No results found</p></center></li>")
-          $("ul.edgetoedge#close_places").append(li)
-         else
-          for i in [0..ret.length-1]
-            li = $("<li></li>")
-            name = $("<h3>#{ret[i]['name']}</h3>")
-            li.append(name)
-            center = $("<center></center>")
-            for j in [0..ret[i]['photos'].length-1]
-              image = $("<img src=\"#{ret[i]['photos'][j]['image_low_resolution']}\"></img>")
-              center.append(image)
-            link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
-            vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
-            li.append(center)
-            li.append(vicinity)
-            li.append(link2)
-            $("ul.edgetoedge#close_places").append(li)
-          show_map_listener()
+      get_close_places(0.3)
   else
     alert "Impossible to find your location"
 
@@ -184,6 +187,10 @@ $ ->
   if first_time
     init()
     first_time = false
+
+  $("input.rayon").on 'click', ->
+    rayon = $(this).val()
+    get_close_places(rayon)
 
   #$(document).on "page:change", ->
     #console.log window.location.pathname
