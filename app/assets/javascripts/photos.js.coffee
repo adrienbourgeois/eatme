@@ -25,7 +25,7 @@ load_more_photos = () ->
 
       for i in [0..ret.length-1]
         li = $("<li></li>")
-        image = $("<img src=#{ret[i]['image_low_resolution']}></img><br>")
+        image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center><br>")
         titre = $("<h1>#{ret[i]['place']['name']}</h1>")
         link2 = $("<div class='time'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
 

@@ -16,7 +16,7 @@ class PhotosController < ApplicationController
 
   private
   def minutes_ago time
-    time = Time.parse time
+    time = Time.zone.parse time
     seconds = (Time.zone.now - time).to_i
     minute = seconds/1.minute
     hour = seconds/1.hour
