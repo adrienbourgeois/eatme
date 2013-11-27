@@ -30,11 +30,10 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
     ul.edgetoedge#close_places
     ul.edgetoedge
       li
-        h3
-          center
-            = image_tag "spiffygif.gif", id: "spinner_close_places", style: "display: none;"
-            p
-              |EatMe
+        center
+          = image_tag "spiffygif.gif", id: "spinner_close_places", style: "display: none;"
+          h4
+            |EatMe
 
   #home.edgetoedge
     .toolbar
@@ -58,11 +57,10 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
     ul.edgetoedge#gallery
     ul.edgetoedge
       li
-        h3
-          center
-            = image_tag "spiffygif.gif", id: "spinner_just_eaten", style: "display: none;"
-            p
-              |EatMe
+        center
+          = image_tag "spiffygif.gif", id: "spinner_just_eaten", style: "display: none;"
+          h4
+            |EatMe
   #about.edgetoedge
     .toolbar
       a class="button slideup" id="infoButton" href="#home"

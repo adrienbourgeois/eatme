@@ -114,7 +114,6 @@ get_close_places = (rayon) ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
-     $("ul.edgetoedge#close_places").find("li").remove()
      if ret.length == 0
       li = $("<li><center><p>No results found</p></center></li>")
       $("ul.edgetoedge#close_places").append(li)
@@ -135,6 +134,7 @@ get_close_places = (rayon) ->
         $("ul.edgetoedge#close_places").append(li)
       show_map_listener()
     beforeSend: ->
+     $("ul.edgetoedge#close_places").find("li").remove()
      $("#spinner_close_places")[0].style.display = "inline"
     complete: ->
      $("#spinner_close_places")[0].style.display = "none"
