@@ -130,7 +130,7 @@ load_more_listener_off = ->
 just_eaten = ->
   page_name = $("span.page").data("page_name")
   if page_name is "just_eaten"
-    page = 2
+    page = 1
     #show_map_listener()
     load_more_listener_off()
     load_more_listener_on()
