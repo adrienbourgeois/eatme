@@ -28,6 +28,13 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       input.rayon type="radio" name="rayon" value=3.0
         |  3.0mi
     ul.edgetoedge#close_places
+    ul.edgetoedge
+      li
+        h3
+          center
+            = image_tag "spiffygif.gif", id: "spinner_close_places", style: "display: none;"
+            p
+              |EatMe
 
   #home.edgetoedge
     .toolbar
@@ -49,9 +56,13 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       a class="button slideup" id="infoButton" href="#home"
         |Menu
     ul.edgetoedge#gallery
-      /- @photos.each do |photo|
-        /li
-          /= image_tag photo.image_low_resolution
+    ul.edgetoedge
+      li
+        h3
+          center
+            = image_tag "spiffygif.gif", id: "spinner_just_eaten", style: "display: none;"
+            p
+              |EatMe
   #about.edgetoedge
     .toolbar
       a class="button slideup" id="infoButton" href="#home"
@@ -64,13 +75,4 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
         p
           |LinkedIn
 
-
-
-/center
-  /a#more href="#" data-page=2
-    /.pretty_button
-      /span
-        /|More
-
-/br
 
