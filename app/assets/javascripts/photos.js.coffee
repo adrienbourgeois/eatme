@@ -106,7 +106,7 @@ just_eaten = ->
 
 init = ->
   just_eaten()
-  get_location()
+  get_location(0.3)
 
 get_close_places = (rayon) ->
   $.ajax
@@ -134,15 +134,15 @@ get_close_places = (rayon) ->
         $("ul.edgetoedge#close_places").append(li)
       show_map_listener()
     beforeSend: ->
-     $("ul.edgetoedge#close_places").find("li").remove()
-     $("#spinner_close_places")[0].style.display = "inline"
+     #$("ul.edgetoedge#close_places").find("li").remove()
+     #$("#spinner_close_places")[0].style.display = "inline"
     complete: ->
      $("#spinner_close_places")[0].style.display = "none"
 
 
-get_location = ->
-  #page_name = $("span.page").data("page_name")
-  #if page_name is "places_finder"
+get_location = (rayon)->
+  $("ul.edgetoedge#close_places").find("li").remove()
+  $("#spinner_close_places")[0].style.display = "inline"
   if(navigator.geolocation)
     navigator.geolocation.getCurrentPosition (position) ->
       latitude_user = position.coords.latitude
@@ -150,7 +150,7 @@ get_location = ->
       console.log "#{latitude},#{longitude}"
       #latitude_user = -33.867589
       #longitude_user = 151.208611
-      get_close_places(0.3)
+      get_close_places(rayon)
   else
     alert "Impossible to find your location"
 
@@ -162,7 +162,12 @@ $ ->
 
   $("input.rayon").on 'click', ->
     rayon = $(this).val()
-    get_close_places(rayon)
+    get_location(rayon)
+
+  $("a").on 'click', ->
+    if $(this).attr('href') is "#just_eaten"
+      page = 1
+      $("ul.edgetoedge#gallery").find("li").remove()
 
   #$(document).on "page:change", ->
     #console.log window.location.pathname
