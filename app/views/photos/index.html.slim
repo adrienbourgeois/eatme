@@ -77,6 +77,21 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
     ul.edgetoedge
       li
         center
+          = image_tag "spiffygif.gif", id: "spinner_popular_places", style: "display: none;"
+          h4
+            |EatMe
+  #show_place.edgetoedge
+    .toolbar
+      h1 Show Place
+      a.back href="#popular_places"
+        |Back
+      a class="button slideup" id="infoButton" href="#home"
+        |Menu
+    ul.edgetoedge#show_place
+    ul.edgetoedge
+      li
+        center
+          = image_tag "spiffygif.gif", id: "spinner_show_place", style: "display: none;"
           h4
             |EatMe
   #about.edgetoedge

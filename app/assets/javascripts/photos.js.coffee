@@ -155,6 +155,39 @@ get_location = (rayon)->
     alert "Impossible to find your location"
 
 
+show_place = (id) ->
+  window.location.href = "#show_place"
+  console.log "==========#{$(".asasdfasdf").length}"
+  $.ajax
+    url: "/places/#{id}"
+    dataType: "json"
+    contentType: "application/json"
+    success: (ret) ->
+     if ret.length == 0
+      li = $("<li><center><p>No results found</p></center></li>")
+      $("ul.edgetoedge#close_places").append(li)
+     else
+      li = $("<li></li>")
+      name = $("<h3>#{ret['name']}</h3>")
+      li.append(name)
+      center = $("<center></center>")
+      for j in [0..ret['photos'].length-1]
+        image = $("<img src=\"#{ret['photos'][j]['image_low_resolution']}\"></img>")
+        center.append(image)
+      link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret['latitude']}\' data-longitude=\'#{ret['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
+      vicinity = $("<div class='vicinity'>#{ret['vicinity']}</div>")
+      li.append(center)
+      li.append(vicinity)
+      li.append(link2)
+      $("ul.edgetoedge#show_place").append(li)
+     show_map_listener()
+
+    beforeSend: ->
+     $("ul.edgetoedge#show_place").find("li").remove()
+     $("#spinner_show_place")[0].style.display = "inline"
+    complete: ->
+     $("#spinner_show_place")[0].style.display = "none"
+
 $ ->
   if first_time
     init()
@@ -164,6 +197,7 @@ $ ->
     rayon = $(this).val()
     get_location(rayon)
 
+
   $(window).on 'hashchange', ->
     anchor = window.location.hash
     console.log $(location).attr('href')
@@ -171,17 +205,34 @@ $ ->
       page = 1
       $("ul.edgetoedge#gallery").find("li").remove()
     if anchor is "#popular_places"
-      $("ul.edgetoedge#popular_places").find("li").remove()
-      $.ajax
-        url: "/places?page=popular"
-        dataType: "json"
-        contentType: "application/json"
-        success: (ret) ->
-          for i in [0..ret.length-1]
-            li = $("<li>#{ret[i]['name']} (#{ret[i]['photos'].length})</li>")
-            $("ul.edgetoedge#popular_places").append(li)
-        beforeSend: ->
-        complete: ->
+      if $("ul.edgetoedge#popular_places").find("li").length is 0
+        $.ajax
+          url: "/places?page=popular"
+          dataType: "json"
+          contentType: "application/json"
+          success: (ret) ->
+            for i in [0..ret.length-1]
+              li = $("<li></li>")
+              row = $("<div class='row'></div>")
+              col1 = $("<div class='col-sm-9'></div>")
+              col2 = $("<div class='col-sm-3'></div>")
+              name = $("<span>#{ret[i]['name']} (#{ret[i]['photos'].length})</span>")
+              button = $("<div class='vicinity'><button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
+              col1.append(name)
+              col2.append(button)
+              row.append(col1)
+              row.append(col2)
+              li.append(row)
+              $("ul.edgetoedge#popular_places").append(li)
+          beforeSend: ->
+            $("#spinner_popular_places")[0].style.display = "inline"
+            $("button.show_place").off 'click'
+          complete: ->
+            $("#spinner_popular_places")[0].style.display = "none"
+            $("button.show_place").on 'click', ->
+              id = $(this).data("place_id")
+              show_place(id)
+
 
   #$(document).on "page:change", ->
     #console.log window.location.pathname
