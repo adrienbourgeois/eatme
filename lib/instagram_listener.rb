@@ -42,16 +42,13 @@ module InstagramListener
     Photo.find_by(instagram_id: instagram_id) == nil
   end
 
-  API_KEY = 'AIzaSyBoOYKjtORixe_wELz_I5bK97AwR9yz2TM'
-  @client = GooglePlaces::Client.new(API_KEY)
-
-
   def google_find place_name, latitude, longitude
-    #if File.exist?("#{Rails.root.to_s}/config/config.yml")
-      #API_CREDENTIALS = YAML.load_file("#{Rails.root.to_s}/config/config.yml")
-      #puts "================== #{API_CREDENTIALS['google_api_key']}"
-      #@client = GooglePlaces::Client.new(API_CREDENTIALS['google_api_key'])
-    #end
+    if File.exist?("#{Rails.root.to_s}/config/config.yml")
+      api_credentials = YAML.load_file("#{Rails.root.to_s}/config/config.yml")
+      @client = GooglePlaces::Client.new(api_credentials['google_api_key'])
+    else
+      @client = GooglePlaces::Client.new(ENV['google_api_key'])
+    end
     spots = @client.spots(latitude, longitude, radius: 100,
                           types: ['restaurant','food','cafe','hotel','bar'],
                           name: place_name)
@@ -116,11 +113,6 @@ module InstagramListener
   def script
 
     start = Time.now
-
-    #Instagram.configure do |config|
-    #config.client_id = "c35bc560cef94c148dcf2c48cdc4c31d"
-    #config.client_secret = "9e951e5f4983466f855d14e1af5fc2fe"
-    #end
 
     puts in_sydney?(-33.863687, 151.209083)
 
@@ -192,21 +184,4 @@ module InstagramListener
     end
   end
 end
-#include InstagramListener
 
-
-#InstagramListener.script
-
-#puts InstagramService.is_not_in_db? 590936166465201281
-#puts InstagramService.is_not_in_db? 590937478780558384
-#puts InstagramService.is_not_in_db? 590944518769053839
-#puts InstagramService.is_not_in_db? 590842480352989972
-#puts InstagramService.is_not_in_db? 590736442735554727
-
-#InstagramService.update_instagram_id
-
-#InstagramService.destroy_doublon
-
-
-#InstagramService.find_places
-#InstagramService.update_photo_place
