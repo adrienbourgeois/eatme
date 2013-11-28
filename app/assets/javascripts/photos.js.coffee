@@ -11,6 +11,7 @@ longitude_user = 0
 page = 1
 end = false
 first_time = true
+last_page = ''
 
 getDocHeight = ->
   D = document
@@ -33,7 +34,8 @@ load_more_photos = () ->
         li = $("<li></li>")
         image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center>")
         titre = $("<h3>#{ret[i]['place']['name']}</h3>")
-        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
+        button = $("<div class='vicinity'></div>")
+        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['place']['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
         minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
         vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
         li. append titre
@@ -45,11 +47,15 @@ load_more_photos = () ->
       page++
       show_map_listener()
     beforeSend: ->
+      $("button.show_place").off 'click'
       load_more_listener_off()
       $("#spinner_just_eaten")[0].style.display = "inline"
     complete: ->
       load_more_listener_on()
       $("#spinner_just_eaten")[0].style.display = "none"
+      $("button.show_place").on 'click', ->
+        id = $(this).data("place_id")
+        show_place(id)
 
 
 ##################################################################################
@@ -202,8 +208,10 @@ $ ->
     anchor = window.location.hash
     console.log $(location).attr('href')
     if anchor is "#just_eaten"
-      page = 1
-      $("ul.edgetoedge#gallery").find("li").remove()
+      if last_page != "#show_place"
+        page = 1
+        $("ul.edgetoedge#gallery").find("li").remove()
+
     if anchor is "#popular_places"
       if $("ul.edgetoedge#popular_places").find("li").length is 0
         $.ajax
@@ -232,6 +240,7 @@ $ ->
             $("button.show_place").on 'click', ->
               id = $(this).data("place_id")
               show_place(id)
+    last_page = anchor
 
 
   #$(document).on "page:change", ->
