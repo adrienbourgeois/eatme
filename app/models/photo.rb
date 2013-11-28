@@ -7,7 +7,6 @@ class Photo < ActiveRecord::Base
     photos = Photo.all.where(checked:true).order(created_at: :desc).page(page).per(PER_PAGE)
     photos_js = JSON.parse(photos.to_json(include: :place))
     photos_js.each { |photo| photo['minutes_ago'] = minutes_ago(photo['updated_at']) }
-    #return photos_js
   end
 
 

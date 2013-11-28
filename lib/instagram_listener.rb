@@ -42,11 +42,16 @@ module InstagramListener
     Photo.find_by(instagram_id: instagram_id) == nil
   end
 
-
   API_KEY = 'AIzaSyBoOYKjtORixe_wELz_I5bK97AwR9yz2TM'
   @client = GooglePlaces::Client.new(API_KEY)
 
+
   def google_find place_name, latitude, longitude
+    #if File.exist?("#{Rails.root.to_s}/config/config.yml")
+      #API_CREDENTIALS = YAML.load_file("#{Rails.root.to_s}/config/config.yml")
+      #puts "================== #{API_CREDENTIALS['google_api_key']}"
+      #@client = GooglePlaces::Client.new(API_CREDENTIALS['google_api_key'])
+    #end
     spots = @client.spots(latitude, longitude, radius: 100,
                           types: ['restaurant','food','cafe','hotel','bar'],
                           name: place_name)
@@ -112,10 +117,10 @@ module InstagramListener
 
     start = Time.now
 
-    Instagram.configure do |config|
-      config.client_id = "c35bc560cef94c148dcf2c48cdc4c31d"
-      config.client_secret = "9e951e5f4983466f855d14e1af5fc2fe"
-    end
+    #Instagram.configure do |config|
+    #config.client_id = "c35bc560cef94c148dcf2c48cdc4c31d"
+    #config.client_secret = "9e951e5f4983466f855d14e1af5fc2fe"
+    #end
 
     puts in_sydney?(-33.863687, 151.209083)
 
@@ -165,16 +170,16 @@ module InstagramListener
 
 
               Photo.create(
-                           instagram_id: instagram_id,
-                           image_low_resolution: image_low_resolution,
-                           image_thumbnail: image_thumbnail,
-                           image_standard_resolution: image_standard_resolution,
-                           instagram_url: instagram_url,
-                           instagram_body_req: instagram_body_req,
-                           tags: tags,
-                           place_id: place_id,
-                           checked: checked
-                          )
+                instagram_id: instagram_id,
+                image_low_resolution: image_low_resolution,
+                image_thumbnail: image_thumbnail,
+                image_standard_resolution: image_standard_resolution,
+                instagram_url: instagram_url,
+                instagram_body_req: instagram_body_req,
+                tags: tags,
+                place_id: place_id,
+                checked: checked
+              )
             end
 
             puts "id: #{count}"
