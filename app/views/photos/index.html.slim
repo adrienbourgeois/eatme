@@ -43,6 +43,9 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
         a href="#close_places"
           |Close Places
       li
+        a href="#popular_places"
+          |Popular Places
+      li
         a href="#just_eaten"
           |Just Eaten
       li
@@ -63,6 +66,17 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       li
         center
           = image_tag "spiffygif.gif", id: "spinner_just_eaten", style: "display: none;"
+          h4
+            |EatMe
+  #popular_places.edgetoedge
+    .toolbar
+      h1 Popular Places
+      a class="button slideup" id="infoButton" href="#home"
+        |Menu
+    ul.edgetoedge#popular_places
+    ul.edgetoedge
+      li
+        center
           h4
             |EatMe
   #about.edgetoedge

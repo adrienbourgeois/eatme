@@ -164,10 +164,24 @@ $ ->
     rayon = $(this).val()
     get_location(rayon)
 
-  $("a").on 'click', ->
-    if $(this).attr('href') is "#just_eaten"
+  $(window).on 'hashchange', ->
+    anchor = window.location.hash
+    console.log $(location).attr('href')
+    if anchor is "#just_eaten"
       page = 1
       $("ul.edgetoedge#gallery").find("li").remove()
+    if anchor is "#popular_places"
+      $("ul.edgetoedge#popular_places").find("li").remove()
+      $.ajax
+        url: "/places?page=popular"
+        dataType: "json"
+        contentType: "application/json"
+        success: (ret) ->
+          for i in [0..ret.length-1]
+            li = $("<li>#{ret[i]['name']} (#{ret[i]['photos'].length})</li>")
+            $("ul.edgetoedge#popular_places").append(li)
+        beforeSend: ->
+        complete: ->
 
   #$(document).on "page:change", ->
     #console.log window.location.pathname
