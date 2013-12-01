@@ -8,59 +8,15 @@ latitude = 0
 longitude = 0
 latitude_user = 0
 longitude_user = 0
-page = 1
+page_just_eaten = 1
+page_close_places = 1
 end = false
-first_time = true
 last_page = ''
-
-getDocHeight = ->
-  D = document
-  Math.max D.body.scrollHeight, D.documentElement.scrollHeight, D.body.offsetHeight, D.documentElement.offsetHeight, D.body.clientHeight, D.documentElement.clientHeight
-
-load_more_photos = () ->
-  #event.preventDefault()
-  $.ajax
-    url: "/photos?page=#{page}"
-    dataType: "json"
-    contentType: "application/json"
-    success: (ret) ->
-      #return true
-      if window.location.hash != "#just_eaten"
-        return true
-      if ret.length%3 isnt 0 or ret.length is 0
-        end = true
-
-      for i in [0..ret.length-1]
-        li = $("<li></li>")
-        image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center>")
-        titre = $("<h3>#{ret[i]['place']['name']}</h3>")
-        button = $("<div class='vicinity'></div>")
-        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['place']['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
-        minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
-        vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
-        li. append titre
-        li.append image
-        li.append minutes_ago
-        li.append vicinity
-        li.append link2
-        $("ul.edgetoedge#gallery").append li
-      page++
-      show_map_listener()
-    beforeSend: ->
-      $("button.show_place").off 'click'
-      load_more_listener_off()
-      $("#spinner_just_eaten")[0].style.display = "inline"
-    complete: ->
-      load_more_listener_on()
-      $("#spinner_just_eaten")[0].style.display = "none"
-      $("button.show_place").on 'click', ->
-        id = $(this).data("place_id")
-        show_place(id)
-
+rayon_gv = -1
 
 ##################################################################################
 
-initialize = ->
+initialize_map = ->
   myLatlng = new google.maps.LatLng(latitude, longitude)
   mapOptions =
     center: myLatlng
@@ -74,53 +30,41 @@ initialize = ->
     map: map
   )
 
-##################################################################################
-
 show_map_listener = ->
   $("button.show_map").off "click", ->
   $("button.show_map").on "click", ->
     latitude = $(this).data("latitude")
     longitude = $(this).data("longitude")
-    google.maps.event.addDomListener window, "load", initialize()
+    google.maps.event.addDomListener window, "load", initialize_map()
 
 ##################################################################################
 
+getDocHeight = ->
+  D = document
+  Math.max D.body.scrollHeight, D.documentElement.scrollHeight, D.body.offsetHeight, D.documentElement.offsetHeight, D.body.clientHeight, D.documentElement.clientHeight
+
 load_more_photos_when_page_bottom_reached = ->
   if $(window).height() + $(window).scrollTop() - getDocHeight() > -200
-    load_more_photos(event)
+    if window.location.hash == "#just_eaten"
+      just_eaten_loading(event)
+    if window.location.hash == "#close_places" && rayon_gv != -1
+      close_places_loading(rayon_gv)
 
 load_more_listener_on = ->
   $(window).bind("scroll",load_more_photos_when_page_bottom_reached)
-  #$("#more").on "click", (event) ->
-    #load_more_photos(event)
 
 load_more_listener_off = ->
   $(window).unbind("scroll",load_more_photos_when_page_bottom_reached)
-  #$("#more").off "click"
 
-just_eaten = ->
-  page_name = $("span.page").data("page_name")
-  if page_name is "just_eaten"
-    page = 1
-    #show_map_listener()
-    load_more_listener_off()
-    load_more_listener_on()
+##################################################################################
 
-   $("#myModal").on "shown.bs.modal", ->
-      google.maps.event.trigger map, "resize"
-      map.setCenter(new google.maps.LatLng(latitude, longitude))
-
-init = ->
-  just_eaten()
-  get_location(0.3)
-
-get_close_places = (rayon) ->
+close_places_loading = (rayon) ->
   $.ajax
-    url: "/places?latitude=#{latitude_user}&longitude=#{longitude_user}&rayon=#{rayon}"
+    url: "/places?page=#{page_close_places}&latitude=#{latitude_user}&longitude=#{longitude_user}&rayon=#{rayon}"
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
-     if ret.length == 0
+     if ret.length == 0 && page_close_places == 1
       li = $("<li><center><p>No results found</p></center></li>")
       $("ul.edgetoedge#close_places").append(li)
      else
@@ -138,15 +82,55 @@ get_close_places = (rayon) ->
         li.append(vicinity)
         li.append(link2)
         $("ul.edgetoedge#close_places").append(li)
+      page_close_places++
       show_map_listener()
     beforeSend: ->
-     #$("ul.edgetoedge#close_places").find("li").remove()
-     #$("#spinner_close_places")[0].style.display = "inline"
+     load_more_listener_off()
+     $("#spinner_close_places")[0].style.display = "inline"
     complete: ->
+     load_more_listener_on()
      $("#spinner_close_places")[0].style.display = "none"
 
+##################################################################################
 
-get_location = (rayon)->
+just_eaten_loading = ->
+  $.ajax
+    url: "/photos?page=#{page_just_eaten}"
+    dataType: "json"
+    contentType: "application/json"
+    success: (ret) ->
+      if ret.length is 0
+        end = true
+      for i in [0..ret.length-1]
+        li = $("<li></li>")
+        image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center>")
+        titre = $("<h3>#{ret[i]['place']['name']}</h3>")
+        button = $("<div class='vicinity'></div>")
+        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['place']['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
+        minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
+        vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
+        li. append titre
+        li.append image
+        li.append minutes_ago
+        li.append vicinity
+        li.append link2
+        $("ul.edgetoedge#gallery").append li
+      page_just_eaten++
+      show_map_listener()
+    beforeSend: ->
+      $("button.show_place").off 'click'
+      load_more_listener_off()
+      $("#spinner_just_eaten")[0].style.display = "inline"
+    complete: ->
+      load_more_listener_on()
+      $("#spinner_just_eaten")[0].style.display = "none"
+      $("button.show_place").on 'click', ->
+        id = $(this).data("place_id")
+        show_place(id)
+
+##################################################################################
+
+close_places = (rayon)->
   $("ul.edgetoedge#close_places").find("li").remove()
   $("#spinner_close_places")[0].style.display = "inline"
   if(navigator.geolocation)
@@ -156,10 +140,11 @@ get_location = (rayon)->
       console.log "#{latitude},#{longitude}"
       #latitude_user = -33.867589
       #longitude_user = 151.208611
-      get_close_places(rayon)
+      close_places_loading(rayon)
   else
     alert "Impossible to find your location"
 
+##################################################################################
 
 show_place = (id) ->
   window.location.href = "#show_place"
@@ -171,7 +156,7 @@ show_place = (id) ->
     success: (ret) ->
      if ret.length == 0
       li = $("<li><center><p>No results found</p></center></li>")
-      $("ul.edgetoedge#close_places").append(li)
+      $("ul.edgetoedge#show_place").append(li)
      else
       li = $("<li></li>")
       name = $("<h3>#{ret['name']}</h3>")
@@ -187,72 +172,67 @@ show_place = (id) ->
       li.append(link2)
       $("ul.edgetoedge#show_place").append(li)
      show_map_listener()
-
     beforeSend: ->
      $("ul.edgetoedge#show_place").find("li").remove()
      $("#spinner_show_place")[0].style.display = "inline"
     complete: ->
      $("#spinner_show_place")[0].style.display = "none"
 
+##################################################################################
+
+popular_places = ->
+  if $("ul.edgetoedge#popular_places").find("li").length is 0
+    $.ajax
+      url: "/places?page=popular"
+      dataType: "json"
+      contentType: "application/json"
+      success: (ret) ->
+        for i in [0..ret.length-1]
+          li = $("<li></li>")
+          row = $("<div class='row'></div>")
+          col1 = $("<div class='col-sm-9'></div>")
+          col2 = $("<div class='col-sm-3'></div>")
+          name = $("<span>#{ret[i]['name']} (#{ret[i]['photos'].length})</span>")
+          button = $("<div class='vicinity'><button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
+          col1.append(name)
+          col2.append(button)
+          row.append(col1)
+          row.append(col2)
+          li.append(row)
+          $("ul.edgetoedge#popular_places").append(li)
+      beforeSend: ->
+        $("#spinner_popular_places")[0].style.display = "inline"
+        $("button.show_place").off 'click'
+      complete: ->
+        $("#spinner_popular_places")[0].style.display = "none"
+        $("button.show_place").on 'click', ->
+          id = $(this).data("place_id")
+          show_place(id)
+
+##################################################################################
+
 $ ->
-  if first_time
-    init()
-    first_time = false
+  close_places(0.3)
 
   $("input.rayon").on 'click', ->
     rayon = $(this).val()
-    get_location(rayon)
+    page_close_places = 1
+    close_places(rayon)
+    rayon_gv = rayon
 
+  $("#myModal").on "shown.bs.modal", ->
+    google.maps.event.trigger map, "resize"
+    map.setCenter(new google.maps.LatLng(latitude, longitude))
 
   $(window).on 'hashchange', ->
     anchor = window.location.hash
     console.log $(location).attr('href')
     if anchor is "#just_eaten"
       if last_page != "#show_place"
-        page = 1
+        page_just_eaten = 1
         $("ul.edgetoedge#gallery").find("li").remove()
 
     if anchor is "#popular_places"
-      if $("ul.edgetoedge#popular_places").find("li").length is 0
-        $.ajax
-          url: "/places?page=popular"
-          dataType: "json"
-          contentType: "application/json"
-          success: (ret) ->
-            for i in [0..ret.length-1]
-              li = $("<li></li>")
-              row = $("<div class='row'></div>")
-              col1 = $("<div class='col-sm-9'></div>")
-              col2 = $("<div class='col-sm-3'></div>")
-              name = $("<span>#{ret[i]['name']} (#{ret[i]['photos'].length})</span>")
-              button = $("<div class='vicinity'><button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
-              col1.append(name)
-              col2.append(button)
-              row.append(col1)
-              row.append(col2)
-              li.append(row)
-              $("ul.edgetoedge#popular_places").append(li)
-          beforeSend: ->
-            $("#spinner_popular_places")[0].style.display = "inline"
-            $("button.show_place").off 'click'
-          complete: ->
-            $("#spinner_popular_places")[0].style.display = "none"
-            $("button.show_place").on 'click', ->
-              id = $(this).data("place_id")
-              show_place(id)
+      popular_places()
     last_page = anchor
-
-
-  #$(document).on "page:change", ->
-    #console.log window.location.pathname
-  #load_more_photos()
-
-
-
-
-
-
-
-
-
 
