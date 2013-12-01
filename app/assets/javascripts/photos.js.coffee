@@ -10,7 +10,8 @@ latitude_user = 0
 longitude_user = 0
 page_just_eaten = 1
 page_close_places = 1
-end = false
+end_just_eaten = false
+end_close_places = false
 last_page = ''
 rayon_gv = -1
 
@@ -45,9 +46,9 @@ getDocHeight = ->
 
 load_more_photos_when_page_bottom_reached = ->
   if $(window).height() + $(window).scrollTop() - getDocHeight() > -200
-    if window.location.hash == "#just_eaten"
+    if window.location.hash == "#just_eaten" && !end_just_eaten
       just_eaten_loading(event)
-    if window.location.hash == "#close_places" && rayon_gv != -1
+    if window.location.hash == "#close_places" && rayon_gv != -1 && !end_close_places
       close_places_loading(rayon_gv)
 
 load_more_listener_on = ->
@@ -64,9 +65,12 @@ close_places_loading = (rayon) ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
-     if ret.length == 0 && page_close_places == 1
-      li = $("<li><center><p>No results found</p></center></li>")
-      $("ul.edgetoedge#close_places").append(li)
+     if ret.length == 0
+       if page_close_places == 1
+        li = $("<li><center><p>No results found</p></center></li>")
+        $("ul.edgetoedge#close_places").append(li)
+       else
+        end_close_places = true
      else
       for i in [0..ret.length-1]
         li = $("<li></li>")
@@ -100,23 +104,24 @@ just_eaten_loading = ->
     contentType: "application/json"
     success: (ret) ->
       if ret.length is 0
-        end = true
-      for i in [0..ret.length-1]
-        li = $("<li></li>")
-        image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center>")
-        titre = $("<h3>#{ret[i]['place']['name']}</h3>")
-        button = $("<div class='vicinity'></div>")
-        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['place']['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
-        minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
-        vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
-        li. append titre
-        li.append image
-        li.append minutes_ago
-        li.append vicinity
-        li.append link2
-        $("ul.edgetoedge#gallery").append li
-      page_just_eaten++
-      show_map_listener()
+        end_just_eaten = true
+      else
+        for i in [0..ret.length-1]
+          li = $("<li></li>")
+          image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center>")
+          titre = $("<h3>#{ret[i]['place']['name']}</h3>")
+          button = $("<div class='vicinity'></div>")
+          link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['place']['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
+          minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
+          vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
+          li. append titre
+          li.append image
+          li.append minutes_ago
+          li.append vicinity
+          li.append link2
+          $("ul.edgetoedge#gallery").append li
+        page_just_eaten++
+        show_map_listener()
     beforeSend: ->
       $("button.show_place").off 'click'
       load_more_listener_off()
@@ -215,6 +220,7 @@ $ ->
   close_places(0.3)
 
   $("input.rayon").on 'click', ->
+    end_close_places = false
     rayon = $(this).val()
     page_close_places = 1
     close_places(rayon)
@@ -229,6 +235,7 @@ $ ->
     console.log $(location).attr('href')
     if anchor is "#just_eaten"
       if last_page != "#show_place"
+        end_just_eaten = false
         page_just_eaten = 1
         $("ul.edgetoedge#gallery").find("li").remove()
 
