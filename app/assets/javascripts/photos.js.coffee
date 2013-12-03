@@ -12,6 +12,7 @@ page_just_eaten = 1
 page_close_places = 1
 end_just_eaten = false
 end_close_places = false
+loading = false
 last_page = ''
 rayon_gv = -1
 
@@ -46,7 +47,7 @@ getDocHeight = ->
 
 load_more_photos_when_page_bottom_reached = ->
   if $(window).height() + $(window).scrollTop() - getDocHeight() > -200
-    if window.location.hash == "#just_eaten" && !end_just_eaten
+    if window.location.hash == "#just_eaten" && !end_just_eaten && !loading
       just_eaten_loading(event)
     if window.location.hash == "#close_places" && rayon_gv != -1 && !end_close_places
       close_places_loading(rayon_gv)
@@ -78,7 +79,7 @@ close_places_loading = (rayon) ->
         li.append(name)
         center = $("<center></center>")
         for j in [0..ret[i]['photos'].length-1]
-          image = $("<img src=\"#{ret[i]['photos'][j]['image_low_resolution']}\"></img>")
+          image = $("<img src=\"#{ret[i]['photos'][j]['image_thumbnail']}\"></img>")
           center.append(image)
         link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
         vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
@@ -89,11 +90,13 @@ close_places_loading = (rayon) ->
       page_close_places++
       show_map_listener()
     beforeSend: ->
+     loading = true
      load_more_listener_off()
      $("#spinner_close_places")[0].style.display = "inline"
     complete: ->
      load_more_listener_on()
      $("#spinner_close_places")[0].style.display = "none"
+     loading = false
 
 ##################################################################################
 
@@ -123,11 +126,13 @@ just_eaten_loading = ->
         page_just_eaten++
         show_map_listener()
     beforeSend: ->
+      loading = true
       $("button.show_place").off 'click'
       load_more_listener_off()
       $("#spinner_just_eaten")[0].style.display = "inline"
     complete: ->
       load_more_listener_on()
+      loading = false
       $("#spinner_just_eaten")[0].style.display = "none"
       $("button.show_place").on 'click', ->
         id = $(this).data("place_id")
@@ -238,6 +243,7 @@ $ ->
         end_just_eaten = false
         page_just_eaten = 1
         $("ul.edgetoedge#gallery").find("li").remove()
+      just_eaten_loading()
 
     if anchor is "#popular_places"
       popular_places()
