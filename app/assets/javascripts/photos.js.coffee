@@ -79,7 +79,7 @@ close_places_loading = (rayon) ->
         li.append(name)
         center = $("<center></center>")
         for j in [0..ret[i]['photos'].length-1]
-          image = $("<img src=\"#{ret[i]['photos'][j]['image_thumbnail']}\"></img>")
+          image = $("<img src=\"#{ret[i]['photos'][j]['image_low_resolution']}\"></img>")
           center.append(image)
         link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
         vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
