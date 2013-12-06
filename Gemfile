@@ -19,6 +19,7 @@ group :development, :test do
   gem 'pg', '0.15.1'
   gem 'sqlite3'
   gem 'rspec-rails', '~> 2.13.1'
+  gem 'database_cleaner'
 end
 
 group :production do
