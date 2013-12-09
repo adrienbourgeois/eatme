@@ -1,0 +1,28 @@
+#about.edgetoedge
+  .toolbar
+    a class="button slideup" id="infoButton" href="#home"
+      |Menu
+    h1 About
+  ul.edgetoedge
+    li
+      p
+        |Adrien Bourgeois
+      p
+        'Check my
+        a href="http://www.linkedin.com/profile/view?id=275306732" target="_blank"
+          'LinkedIn
+        a href="http://www.github.com/adrienbourgeois/eatme" target="_blank"
+          'Github
+    li
+      p
+        |EatMe uses your location to propose you a new way to find restaurants around you by showing you real pictures of the dishes.
+        br
+        |How does it work?
+        br
+        |An algorithm that is running all the time is listening to instagram. It looks for pictures that are within a certain area (i.e. in Sydney) and that contains certain hashtags (#foodporn, #instafood, etc). When it finds such a picture, it uses the picture location and try to find a place that match with "google-places API" so it can record the exact name and the exact address of the place in the data-base.
+      p
+        |EatMe references #{@number_of_photos} different dishes so far.
+    li
+      center
+        h4
+          |EatMe
