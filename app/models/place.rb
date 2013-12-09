@@ -1,5 +1,9 @@
 class Place < ActiveRecord::Base
   has_many :photos
+  validates :google_id,:name,:types,:vicinity,:latitude,:longitude, presence: true
+  validates :google_id, numericality: { only_integer: true }
+  validates :latitude, :longitude, numericality: true
+
   geocoded_by :latitude  => :latitude, :longitude => :longitude
   PER_PAGE = 1
 
