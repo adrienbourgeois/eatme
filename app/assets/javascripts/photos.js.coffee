@@ -106,6 +106,7 @@ just_eaten_loading = ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
+      console.log ret
       if ret.length is 0
         end_just_eaten = true
       else
