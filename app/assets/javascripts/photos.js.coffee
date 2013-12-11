@@ -70,8 +70,7 @@ close_places_loading = (rayon) ->
        if page_close_places == 1
         li = $("<li><center><p>No results found</p></center></li>")
         $("ul.edgetoedge#close_places").append(li)
-       else
-        end_close_places = true
+       end_close_places = true
      else
       for i in [0..ret.length-1]
         li = $("<li></li>")
@@ -244,7 +243,7 @@ $ ->
         end_just_eaten = false
         page_just_eaten = 1
         $("ul.edgetoedge#gallery").find("li").remove()
-      just_eaten_loading()
+        just_eaten_loading()
 
     if anchor is "#popular_places"
       popular_places()
