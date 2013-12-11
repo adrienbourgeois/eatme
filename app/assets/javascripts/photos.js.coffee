@@ -225,9 +225,9 @@ popular_places = ->
 $ ->
   close_places(0.3)
 
-  $("input.rayon").on 'click', ->
-    end_close_places = false
+  $("select#distance").change ->
     rayon = $(this).val()
+    end_close_places = false
     page_close_places = 1
     close_places(rayon)
     rayon_gv = rayon

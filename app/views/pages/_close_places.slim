@@ -3,18 +3,11 @@
     h1 Close Places
     a class="button slideup" id="infoButton" href="#home"
       |Menu
-  ul.edgetoedge
-    input.rayon type="radio" name="rayon" value=0.1 checked=true
-      |  0.1mi
-    br
-    input.rayon type="radio" name="rayon" value=0.3 checked=true
-      |  0.3mi
-    br
-    input.rayon type="radio" name="rayon" value=1.0
-      |  1.0mi
-    br
-    input.rayon type="radio" name="rayon" value=3.0
-      |  3.0mi
+  ul.rounded
+    li
+      |Distance
+    li
+      = select_tag(:distance, options_for_select([['0.1mi',0.1],['0.3mi',0.3],['0.6mi',0.6],['1mi',1],['1.5mi',1.5],['2mi',2],['3mi',3],['5mi',5]],0.3))
   ul.edgetoedge#close_places
   ul.edgetoedge
     li
