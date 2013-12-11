@@ -9,6 +9,7 @@ gem "slim-rails", '~> 2.0.3'
 gem "flickraw", '~> 0.9.6'
 gem 'kaminari', '~> 0.14.1'
 gem "font-awesome-rails", '~> 4.0.3.0'
+gem 'jqtouch_rails', git: 'git://github.com/adrienbourgeois/jqtouch_rails.git'
 
 gem 'instagram'
 gem 'google_places'

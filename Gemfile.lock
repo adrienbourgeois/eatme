@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/adrienbourgeois/jqtouch_rails.git
+  revision: 28ed5be4fe111303dfb50d29f18ab2f7d47b5ffe
+  specs:
+    jqtouch_rails (0.0.3)
+      rails (~> 4.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,7 +74,7 @@ GEM
     faraday_middleware (0.9.0)
       faraday (>= 0.7.4, < 0.9)
     ffi (1.9.3)
-    flickraw (0.9.6)
+    flickraw (0.9.7)
     font-awesome-rails (4.0.3.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.4)
@@ -89,13 +96,13 @@ GEM
     httparty (0.12.0)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    i18n (0.6.5)
+    i18n (0.6.9)
     instagram (0.10.0)
       faraday (>= 0.7, < 0.9)
       faraday_middleware (~> 0.8)
       hashie (>= 0.4.0)
       multi_json (~> 1.0, >= 1.0.3)
-    jbuilder (1.5.2)
+    jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
     jquery-rails (3.0.4)
@@ -105,7 +112,7 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    listen (2.2.0)
+    listen (2.4.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -114,7 +121,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.2)
-    mime-types (1.25)
+    mime-types (1.25.1)
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
@@ -187,13 +194,13 @@ GEM
     slim (2.0.2)
       temple (~> 0.6.6)
       tilt (>= 1.3.3, < 2.1)
-    slim-rails (2.0.3)
+    slim-rails (2.0.4)
       actionpack (>= 3.0, < 4.1)
       activesupport (>= 3.0, < 4.1)
       railties (>= 3.0, < 4.1)
       slim (~> 2.0)
     slop (3.4.7)
-    sprockets (2.10.0)
+    sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -212,10 +219,10 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (1.3.1)
+    turbolinks (2.0.0)
       coffee-rails
     tzinfo (0.3.38)
-    uglifier (2.3.1)
+    uglifier (2.3.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     websocket (1.0.7)
@@ -239,6 +246,7 @@ DEPENDENCIES
   guard-rspec
   instagram
   jbuilder (~> 1.2)
+  jqtouch_rails!
   jquery-rails
   kaminari (~> 0.14.1)
   pg (= 0.15.1)
