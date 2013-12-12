@@ -1,9 +1,11 @@
 class PlacesController < ApplicationController
 
+  PER_PAGE = 1
+
   def index
     @places = nil
     @places = Place.popular if params[:page] == "popular"
-    @places = Place.close_places(params[:latitude], params[:longitude], params[:rayon], params[:page]) if params[:latitude] and params[:longitude]
+    @places = Place.close(params[:latitude], params[:longitude], params[:rayon], params[:page], PER_PAGE) if params[:latitude] and params[:longitude]
     render json: @places.to_json(include: :photos)
   end
 
