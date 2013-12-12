@@ -8,7 +8,7 @@ class Photo < ActiveRecord::Base
 
 
   def self.latest(page,per_page)
-    Photo.all.where(checked:true).order(created_at: :desc).page(page).per(per_page)
+    Photo.where(checked:true).order(created_at: :desc).page(page).per(per_page)
   end
 
 end
