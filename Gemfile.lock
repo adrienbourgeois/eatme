@@ -250,6 +250,7 @@ DEPENDENCIES
   jquery-rails
   kaminari (~> 0.14.1)
   pg (= 0.15.1)
+  pry
   rails (= 4.0.0)
   rails_12factor (= 0.0.2)
   rspec-rails (~> 2.13.1)

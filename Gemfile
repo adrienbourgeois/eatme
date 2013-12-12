@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
+gem 'pry'
 #gem 'bootstrap-sass', git: 'https://github.com/thomas-mcdonald/bootstrap-sass.git', branch: 'master'
 gem 'bootstrap-sass', '~> 3.0.1.0.rc'
 gem 'compass', '~> 0.12.2'
