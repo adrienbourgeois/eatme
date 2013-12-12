@@ -12,13 +12,13 @@ class Place < ActiveRecord::Base
 
   def self.popular
     ids_array = JSON.parse(Information.find_by(name:'popular_places').value)
-    places = Place.find(ids_array)
+    places = self.find(ids_array)
     ids_array.map { |i| places.select { |p| p.id == i }[0] }
   end
 
   def self.close(latitude,longitude,rayon,page,per_page)
     raise ArgumentError, "The rayon is not correct" unless RAYON.include? rayon.to_f
-    Place.near([latitude,longitude], rayon).page(page).per(per_page)
+    self.near([latitude,longitude], rayon).page(page).per(per_page)
   end
 
 end
