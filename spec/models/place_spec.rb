@@ -13,6 +13,9 @@ describe Place do
       close_places = Place.close(-33.0,182.0,3.0,1,10)
       close_places.count.should eq 0
     end
+    it "should raise an exception if the radius is not authorized" do
+      lambda { Place.close(-33.0,182.0,-1.0,1,10) }.should raise_error(ArgumentError)
+    end
   end
 
   describe "popular" do
