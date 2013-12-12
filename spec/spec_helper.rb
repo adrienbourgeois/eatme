@@ -56,4 +56,21 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.include Capybara::DSL
+
+  config.before(:each) do
+    FactoryGirl.create(:photo1)
+    FactoryGirl.create(:photo2)
+    FactoryGirl.create(:photo3)
+    FactoryGirl.create(:photo4)
+    FactoryGirl.create(:photo5)
+    FactoryGirl.create(:photo6)
+    FactoryGirl.create(:photo7)
+    FactoryGirl.create(:photo8)
+    FactoryGirl.create(:photo9)
+    FactoryGirl.create(:photo10)
+    FactoryGirl.create(:photo11)
+    FactoryGirl.create(:place1)
+    FactoryGirl.create(:place2)
+  end
+
 end
