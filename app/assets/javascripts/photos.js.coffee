@@ -39,6 +39,23 @@ show_map_listener = ->
     longitude = $(this).data("longitude")
     google.maps.event.addDomListener window, "load", initialize_map()
 
+show_place_listener = ->
+  $("button.show_place").off 'click'
+  $("button.show_place").on 'click', ->
+    id = $(this).data("place_id")
+    show_place(id)
+
+refresh_listeners = ->
+  show_map_listener()
+  show_place_listener()
+
+spinner_on = (spinner_id) ->
+  $(spinner_id)[0].style.display = "inline"
+
+spinner_off = (spinner_id) ->
+  $(spinner_id)[0].style.display = "none"
+
+
 ##################################################################################
 
 getDocHeight = ->
@@ -54,8 +71,10 @@ load_more_photos_when_page_bottom_reached = ->
 
 load_more_listener_on = ->
   $(window).bind("scroll",load_more_photos_when_page_bottom_reached)
+  loading = false
 
 load_more_listener_off = ->
+  loading = true
   $(window).unbind("scroll",load_more_photos_when_page_bottom_reached)
 
 ##################################################################################
@@ -89,13 +108,11 @@ close_places_loading = (rayon) ->
       page_close_places++
       show_map_listener()
     beforeSend: ->
-     loading = true
      load_more_listener_off()
-     $("#spinner_close_places")[0].style.display = "inline"
+     spinner_on("#spinner_close_places")
     complete: ->
+     spinner_off("#spinner_close_places")
      load_more_listener_on()
-     $("#spinner_close_places")[0].style.display = "none"
-     loading = false
 
 ##################################################################################
 
@@ -124,32 +141,23 @@ just_eaten_loading = ->
           li.append link2
           $("ul.edgetoedge#gallery").append li
         page_just_eaten++
-        show_map_listener()
     beforeSend: ->
-      loading = true
-      $("button.show_place").off 'click'
       load_more_listener_off()
-      $("#spinner_just_eaten")[0].style.display = "inline"
+      spinner_on("#spinner_just_eaten")
     complete: ->
+      spinner_off("#spinner_just_eaten")
+      refresh_listeners()
       load_more_listener_on()
-      loading = false
-      $("#spinner_just_eaten")[0].style.display = "none"
-      $("button.show_place").on 'click', ->
-        id = $(this).data("place_id")
-        show_place(id)
 
 ##################################################################################
 
 close_places = (rayon)->
   $("ul.edgetoedge#close_places").find("li").remove()
-  $("#spinner_close_places")[0].style.display = "inline"
+  spinner_on("#spinner_close_places")
   if(navigator.geolocation)
     navigator.geolocation.getCurrentPosition (position) ->
       latitude_user = position.coords.latitude
       longitude_user = position.coords.longitude
-      console.log "#{latitude},#{longitude}"
-      #latitude_user = -33.867589
-      #longitude_user = 151.208611
       close_places_loading(rayon)
   else
     alert "Impossible to find your location"
@@ -158,7 +166,6 @@ close_places = (rayon)->
 
 show_place = (id) ->
   window.location.href = "#show_place"
-  console.log "==========#{$(".asasdfasdf").length}"
   $.ajax
     url: "/places/#{id}"
     dataType: "json"
@@ -181,12 +188,12 @@ show_place = (id) ->
       li.append(vicinity)
       li.append(link2)
       $("ul.edgetoedge#show_place").append(li)
-     show_map_listener()
     beforeSend: ->
      $("ul.edgetoedge#show_place").find("li").remove()
-     $("#spinner_show_place")[0].style.display = "inline"
+     spinner_on("#spinner_show_place")
     complete: ->
-     $("#spinner_show_place")[0].style.display = "none"
+     show_map_listener()
+     spinner_off("#spinner_show_place")
 
 ##################################################################################
 
@@ -211,13 +218,10 @@ popular_places = ->
           li.append(row)
           $("ul.edgetoedge#popular_places").append(li)
       beforeSend: ->
-        $("#spinner_popular_places")[0].style.display = "inline"
-        $("button.show_place").off 'click'
+        spinner_on("#spinner_popular_places")
       complete: ->
-        $("#spinner_popular_places")[0].style.display = "none"
-        $("button.show_place").on 'click', ->
-          id = $(this).data("place_id")
-          show_place(id)
+        spinner_off("#spinner_popular_places")
+        show_place_listener()
 
 ##################################################################################
 
@@ -237,7 +241,6 @@ $ ->
 
   $(window).on 'hashchange', ->
     anchor = window.location.hash
-    console.log $(location).attr('href')
     if anchor is "#just_eaten"
       if last_page != "#show_place"
         end_just_eaten = false

@@ -1,6 +1,6 @@
 class PlacesController < ApplicationController
 
-  PER_PAGE = 1
+  PER_PAGE = 3
 
   def index
     @places = nil
