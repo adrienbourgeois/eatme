@@ -8,7 +8,7 @@ class Place < ActiveRecord::Base
   validates :google_id, numericality: { only_integer: true }
   validates :latitude, :longitude, numericality: true
 
-  RAYON = [0.1,0.3,0.6,1.0,1.5,2.0,3.0,5.0]
+  RADIUS = [0.1,0.3,0.6,1.0,1.5,2.0,3.0,5.0]
 
   def self.popular
     ids_array = JSON.parse(Information.find_by(name:'popular_places').value)
@@ -16,9 +16,9 @@ class Place < ActiveRecord::Base
     ids_array.map { |i| places.select { |p| p.id == i }[0] }
   end
 
-  def self.close(latitude,longitude,rayon)
-    raise ArgumentError, "The rayon is not correct" unless RAYON.map(&:to_s).include? rayon
-    self.near([latitude,longitude], rayon)
+  def self.close(latitude,longitude,radius)
+    raise ArgumentError, "The radius is not correct" unless RADIUS.map(&:to_s).include? radius
+    self.near([latitude,longitude], radius)
   end
 
 end

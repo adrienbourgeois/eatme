@@ -14,7 +14,7 @@ end_just_eaten = false
 end_close_places = false
 loading = false
 last_page = ''
-rayon_gv = -1
+radius_gv = -1
 
 ##################################################################################
 
@@ -66,8 +66,8 @@ load_more_photos_when_page_bottom_reached = ->
   if $(window).height() + $(window).scrollTop() - getDocHeight() > -200
     if window.location.hash == "#just_eaten" && !end_just_eaten && !loading
       just_eaten_loading(event)
-    if window.location.hash == "#close_places" && rayon_gv != -1 && !end_close_places
-      close_places_loading(rayon_gv)
+    if window.location.hash == "#close_places" && radius_gv != -1 && !end_close_places
+      close_places_loading(radius_gv)
 
 load_more_listener_on = ->
   $(window).bind("scroll",load_more_photos_when_page_bottom_reached)
@@ -79,9 +79,9 @@ load_more_listener_off = ->
 
 ##################################################################################
 
-close_places_loading = (rayon) ->
+close_places_loading = (radius) ->
   $.ajax
-    url: "/places?page=#{page_close_places}&latitude=#{latitude_user}&longitude=#{longitude_user}&rayon=#{rayon}"
+    url: "/places?page=#{page_close_places}&latitude=#{latitude_user}&longitude=#{longitude_user}&radius=#{radius}"
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
@@ -151,14 +151,14 @@ just_eaten_loading = ->
 
 ##################################################################################
 
-close_places = (rayon)->
+close_places = (radius)->
   $("ul.edgetoedge#close_places").find("li").remove()
   spinner_on("#spinner_close_places")
   if(navigator.geolocation)
     navigator.geolocation.getCurrentPosition (position) ->
       latitude_user = position.coords.latitude
       longitude_user = position.coords.longitude
-      close_places_loading(rayon)
+      close_places_loading(radius)
   else
     alert "Impossible to find your location"
 
@@ -229,11 +229,11 @@ $ ->
   close_places(0.3)
 
   $("select#distance").change ->
-    rayon = $(this).val()
+    radius = $(this).val()
     end_close_places = false
     page_close_places = 1
-    close_places(rayon)
-    rayon_gv = rayon
+    close_places(radius)
+    radius_gv = radius
 
   $("#myModal").on "shown.bs.modal", ->
     google.maps.event.trigger map, "resize"
