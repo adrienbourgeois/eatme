@@ -6,11 +6,11 @@ class PlacesController < ApplicationController
     @places = nil
     if params[:page] == "popular"
       @places = Place.popular
-      @places = @places.to_json(include: :photos)
+      @places = @places.to_json
     end
     if params[:latitude] and params[:longitude]
       @places = Place.close(params[:latitude], params[:longitude], params[:radius]).page(params[:page]).per(PER_PAGE)
-      @places = @places.to_json
+      @places = @places.to_json(include: :photos)
     end
     render json: @places
   end
