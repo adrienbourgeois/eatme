@@ -17,7 +17,7 @@ class Place < ActiveRecord::Base
   end
 
   def self.close(latitude,longitude,rayon)
-    raise ArgumentError, "The rayon is not correct" unless RAYON.include? rayon.to_f
+    raise ArgumentError, "The rayon is not correct" unless RAYON.map(&:to_s).include? rayon
     self.near([latitude,longitude], rayon)
   end
 
