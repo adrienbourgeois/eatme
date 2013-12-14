@@ -209,7 +209,7 @@ popular_places = ->
           row = $("<div class='row'></div>")
           col1 = $("<div class='col-sm-9'></div>")
           col2 = $("<div class='col-sm-3'></div>")
-          name = $("<span>#{ret[i]['name']} (#{ret[i]['photos'].length})</span>")
+          name = $("<span>#{ret[i]['name']}</span>")
           button = $("<div class='vicinity'><button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
           col1.append(name)
           col2.append(button)

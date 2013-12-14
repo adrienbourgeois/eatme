@@ -7,4 +7,5 @@ class CreateInformation < ActiveRecord::Migration
       t.timestamps
     end
   end
+  Information.create(name:'popular_places')
 end
