@@ -6,9 +6,6 @@ class Photo < ActiveRecord::Base
   validates :instagram_id, numericality: { only_integer: true }
   validates :checked, inclusion: { in: [true,false], message: "has to be true or false" }
 
-
-  def self.latest(page,per_page)
-    Photo.where(checked:true).order(created_at: :desc).page(page).per(per_page)
-  end
+  scope :checked, -> { where(checked: true) }
 
 end
