@@ -16,9 +16,9 @@ class Place < ActiveRecord::Base
     ids_array.map { |i| places.select { |p| p.id == i }[0] }
   end
 
-  def self.close(latitude,longitude,rayon,page,per_page)
+  def self.close(latitude,longitude,rayon)
     raise ArgumentError, "The rayon is not correct" unless RAYON.include? rayon.to_f
-    self.near([latitude,longitude], rayon).page(page).per(per_page)
+    self.near([latitude,longitude], rayon)
   end
 
 end
