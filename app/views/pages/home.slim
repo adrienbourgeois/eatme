@@ -15,6 +15,8 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
         label
           |Distance
         = select_tag(:distance, options_for_select(Place::RADIUS.map { |r| ["#{r}mi",r] },Place::RADIUS[1]))
+      li
+        |(swipe left on a picture to see the other ones)
     ul.edgetoedge#close_places
     ul.edgetoedge
       li
