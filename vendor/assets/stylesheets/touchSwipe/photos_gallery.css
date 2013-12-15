@@ -4,11 +4,9 @@
   width:306px;
   overflow:hidden;
   position:relative;
-
-  border : 1px solid black;
 }
 
-#imgs
+.imgs
 {
   float:left;
   display:inline;

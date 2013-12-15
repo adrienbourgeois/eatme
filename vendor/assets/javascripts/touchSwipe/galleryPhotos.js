@@ -10,14 +10,23 @@ var swipeOptions=
   triggerOnTouchEnd : true,
   swipeStatus : swipeStatus,
   allowPageScroll:"vertical",
-  threshold:75
+  threshold:75,
 }
 
-$(function()
-  {
-    imgs = $("#imgs");
-    imgs.swipe( swipeOptions );
-  });
+function update_max_images(o)
+{
+  imgs_list = o.find("img");
+  maxImages = imgs_list.length;
+  imgs = o;
+  currentImg = imgs.data("current_img");
+}
+
+function listen_to_swipe()
+{
+  imgs = $(".imgs");
+  imgs.swipe("destroy");
+  imgs.swipe( swipeOptions );
+}
 
 
   /**
@@ -28,11 +37,11 @@ $(function()
    */
   function swipeStatus(event, phase, direction, distance)
   {
+    update_max_images($(this));
     //If we are moving before swipe, and we are going Lor R in X mode, or U or D in Y mode then drag.
     if( phase=="move" && (direction=="left" || direction=="right") )
       {
         var duration=0;
-        alert("hello mthrfucker");
 
         if (direction == "left")
           scrollImages((IMG_WIDTH * currentImg) + distance, duration);
@@ -61,12 +70,14 @@ $(function()
   function previousImage()
   {
     currentImg = Math.max(currentImg-1, 0);
+    imgs.data("current_img",currentImg)
     scrollImages( IMG_WIDTH * currentImg, speed);
   }
 
   function nextImage()
   {
     currentImg = Math.min(currentImg+1, maxImages-1);
+    imgs.data("current_img",currentImg)
     scrollImages( IMG_WIDTH * currentImg, speed);
   }
 
