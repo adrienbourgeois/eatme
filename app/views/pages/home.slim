@@ -12,6 +12,11 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
         |Menu
     ul.rounded
       li
+        #content
+          #imgs
+            - @photos_ex.each do |photo_ex|
+              = image_tag photo_ex.image_low_resolution
+      li
         label
           |Distance
         = select_tag(:distance, options_for_select(Place::RADIUS.map { |r| ["#{r}mi",r] },Place::RADIUS[1]))

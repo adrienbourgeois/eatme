@@ -16,6 +16,54 @@ loading = false
 last_page = ''
 radius_gv = -1
 
+IMG_WIDTH = 306
+currentImg = 0
+maxImages = 30
+speed = 500
+imgs = undefined
+swipeOptions =
+  triggerOnTouchEnd: true
+  swipeStatus: swipeStatus
+  allowPageScroll: "vertical"
+  threshold: 75
+
+
+###
+Catch each phase of the swipe.
+move : we drag the div.
+cancel : we animate back to where we were
+end : we animate to the next image
+###
+swipeStatus = (event, phase, direction, distance) ->
+  #If we are moving before swipe, and we are going Lor R in X mode, or U or D in Y mode then drag.
+  if phase is "move" and (direction is "left" or direction is "right")
+    duration = 0
+    if direction is "left"
+      scrollImages (IMG_WIDTH * currentImg) + distance, duration
+    else scrollImages (IMG_WIDTH * currentImg) - distance, duration  if direction is "right"
+  else if phase is "cancel"
+    scrollImages IMG_WIDTH * currentImg, speed
+  else if phase is "end"
+    if direction is "right"
+      previousImage()
+    else nextImage()  if direction is "left"
+previousImage = ->
+  currentImg = Math.max(currentImg - 1, 0)
+  scrollImages IMG_WIDTH * currentImg, speed
+nextImage = ->
+  currentImg = Math.min(currentImg + 1, maxImages - 1)
+  scrollImages IMG_WIDTH * currentImg, speed
+
+###
+Manuallt update the position of the imgs on drag
+###
+scrollImages = (distance, duration) ->
+  imgs.css "-webkit-transition-duration", (duration / 1000).toFixed(1) + "s"
+
+  #inverse the number we set in the css
+  value = ((if distance < 0 then "" else "-")) + Math.abs(distance).toString()
+  imgs.css "-webkit-transform", "translate3d(" + value + "px,0px,0px)"
+
 ##################################################################################
 
 initialize_map = ->
@@ -178,10 +226,16 @@ show_place = (id) ->
       li = $("<li></li>")
       name = $("<h3>#{ret['name']}</h3>")
       li.append(name)
-      center = $("<center></center>")
+      center = $("<div></div>")
+      #center = $("<center></center>")
+      content = $("<div id='content'></div>")
+      center.append(content)
+      imgs_list = $("<div id='imgs'></div>")
+      content.append(imgs_list)
       for j in [0..ret['photos'].length-1]
+      #for j in [0..2]
         image = $("<img src=\"#{ret['photos'][j]['image_low_resolution']}\"></img>")
-        center.append(image)
+        imgs_list.append(image)
       link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret['latitude']}\' data-longitude=\'#{ret['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
       vicinity = $("<div class='vicinity'>#{ret['vicinity']}</div>")
       li.append(center)
@@ -194,6 +248,7 @@ show_place = (id) ->
     complete: ->
      show_map_listener()
      spinner_off("#spinner_show_place")
+
 
 ##################################################################################
 
@@ -227,6 +282,7 @@ popular_places = ->
 
 $ ->
   close_places(0.3)
+  #show_place(69)
 
   $("select#distance").change ->
     radius = $(this).val()
@@ -251,4 +307,7 @@ $ ->
     if anchor is "#popular_places"
       popular_places()
     last_page = anchor
+
+  imgs = $("#imgs")
+  imgs.swipe swipeOptions
 

@@ -12,7 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree ../../../vendor/assets/javascripts/jqtouch
+//= require ../../../vendor/assets/javascripts/touchSwipe/jquery.touchSwipe.min
+// require_tree ../../../vendor/assets/javascripts/jqtouch
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
