@@ -58,6 +58,7 @@ RSpec.configure do |config|
   config.include Capybara::DSL
 
   config.before(:each) do
+    I18n.enforce_available_locales = false
     FactoryGirl.create(:photo1)
     FactoryGirl.create(:photo2)
     FactoryGirl.create(:photo3)
