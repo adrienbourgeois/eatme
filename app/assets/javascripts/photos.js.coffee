@@ -237,32 +237,37 @@ popular_places = ->
 
 ##################################################################################
 
-$ ->
+$(document).on "page:change", ->
 
-  close_places(0.3)
-  listen_to_swipe();
+  #location_page = window.location.pathname
+  location_page = $("#location_page").data("location_page")
+  console.log location_page
 
-  $("select#distance").change ->
-    radius = $(this).val()
-    end_close_places = false
-    page_close_places = 1
-    close_places(radius)
-    radius_gv = radius
+  if location_page is "home"
+    close_places(0.3)
+    listen_to_swipe();
 
-  $("#myModal").on "shown.bs.modal", ->
-    google.maps.event.trigger map, "resize"
-    map.setCenter(new google.maps.LatLng(latitude, longitude))
+    $("select#distance").change ->
+      radius = $(this).val()
+      end_close_places = false
+      page_close_places = 1
+      close_places(radius)
+      radius_gv = radius
 
-  $(window).on 'hashchange', ->
-    anchor = window.location.hash
-    if anchor is "#just_eaten"
-      if last_page != "#show_place"
-        end_just_eaten = false
-        page_just_eaten = 1
-        $("ul.edgetoedge#gallery").find("li").remove()
-        just_eaten_loading()
+    $("#myModal").on "shown.bs.modal", ->
+      google.maps.event.trigger map, "resize"
+      map.setCenter(new google.maps.LatLng(latitude, longitude))
 
-    if anchor is "#popular_places"
-      popular_places()
-    last_page = anchor
+    $(window).on 'hashchange', ->
+      anchor = window.location.hash
+      if anchor is "#just_eaten"
+        if last_page != "#show_place"
+          end_just_eaten = false
+          page_just_eaten = 1
+          $("ul.edgetoedge#gallery").find("li").remove()
+          just_eaten_loading()
+
+      if anchor is "#popular_places"
+        popular_places()
+      last_page = anchor
 

@@ -2,8 +2,15 @@ Showmeurfood::Application.routes.draw do
 
   root 'pages#home'
 
+  get 'pages/home', to: 'pages#home', as: 'home'
+  get 'pages/signin', to: 'pages#signin'
+
   resources :photos, only: [:index]
   resources :places, only: [:index, :show]
+
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'sessions#destroy', as: 'signout'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

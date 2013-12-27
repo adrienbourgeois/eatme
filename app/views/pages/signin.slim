@@ -1,0 +1,21 @@
+span#location_page data-location_page="signin"
+
+#jqt
+  #signin.edgetoedge
+    ul.edgetoedge
+      li
+        center
+          h3
+            |Eatme
+      li
+        center
+          = link_to image_tag("facebook_logo.png"), "/auth/facebook/", id: "sign_in", rel: "external"
+      li
+        = link_to "Sign in with facebook", "/auth/facebook/", id: "sign_in", rel: "external"
+      li
+        = link_to "Skip sign in", "/pages/home#close_places", { rel:"external" }
+    .info.view
+      p
+        | If you sign in you'll be able to add reviews for restaurants and to make a list of your favourites places.
+      p
+        | Eatme is a web-application that allows you to find great restaurants around you. Eatme shows you pictures of the dishes. Those pictures are from public instagram accounts.

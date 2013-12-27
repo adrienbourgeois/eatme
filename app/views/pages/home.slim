@@ -1,3 +1,5 @@
+span#location_page data-location_page="home"
+
 script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"
 
 #myModal.modal.fade aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
@@ -11,6 +13,12 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       a class="button slideup" id="infoButton" href="#home"
         |Menu
     ul.rounded
+      li
+        - if current_user
+          = image_tag "facebook_small_logo.jpg"
+          |  signed in as #{current_user.name}
+        - else
+          = link_to "Sign in with facebook ", "/auth/facebook/", id: "sign_in", rel: "external"
       li
         label
           |Distance
@@ -38,6 +46,12 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       li
         a href="#just_eaten"
           |Just Eaten
+      - if current_user
+        li
+          = link_to "Sign out", signout_path, { id: "sign_out",  rel: "external" }
+      - else
+        li
+          = link_to "Sign in with facebook ", "/auth/facebook/", id: "sign_in", rel: "external"
       li
         a href="#about"
           |About
@@ -115,4 +129,9 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
         center
           h4
             |EatMe
+
+  div id="_=_"
+    ul.edgetoedge
+      li
+        |whaaat
 

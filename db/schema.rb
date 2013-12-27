@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131121053035) do
+ActiveRecord::Schema.define(version: 20131227013941) do
 
   create_table "information", force: true do |t|
     t.string   "name"
@@ -50,5 +50,16 @@ ActiveRecord::Schema.define(version: 20131121053035) do
 
   add_index "places", ["google_id"], name: "index_places_on_google_id"
   add_index "places", ["name"], name: "index_places_on_name"
+
+  create_table "users", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "image"
+    t.string   "oauth_token"
+    t.datetime "oauth_expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

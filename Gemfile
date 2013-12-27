@@ -15,6 +15,7 @@ gem 'jqtouch_rails', git: 'git://github.com/adrienbourgeois/jqtouch_rails.git'
 gem 'instagram'
 gem 'google_places'
 gem 'geocoder'
+gem 'omniauth-facebook'
 
 # Use sqlite3 as the database for Active Record
 group :development, :test do
