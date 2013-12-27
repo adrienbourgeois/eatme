@@ -17,7 +17,7 @@ class PlacesController < ApplicationController
 
   def show
     @place = Place.find params[:id]
-    render json: @place.to_json(include: :photos)
+    render json: @place.to_json(include: {photos: {}, reviews: {include: :user}})
   end
 
 end

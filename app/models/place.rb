@@ -4,6 +4,7 @@ class Place < ActiveRecord::Base
   geocoded_by :latitude  => :latitude, :longitude => :longitude
 
   has_many :photos
+  has_many :reviews
   validates :google_id,:name,:types,:vicinity,:latitude,:longitude, presence: true
   validates :google_id, numericality: { only_integer: true }
   validates :latitude, :longitude, numericality: true

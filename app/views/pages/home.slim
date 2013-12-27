@@ -15,7 +15,7 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
     ul.rounded
       li
         - if current_user
-          = image_tag "facebook_small_logo.jpg"
+          = image_tag current_user.image
           |  signed in as #{current_user.name}
         - else
           = link_to "Sign in with facebook ", "/auth/facebook/", id: "sign_in", rel: "external"
@@ -98,6 +98,28 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
       li
         center
           = image_tag "spiffygif.gif", id: "spinner_show_place", style: "display: none;"
+    - if current_user
+      = form_tag(reviews_path, method: "post", name: "review") do
+        = hidden_field_tag :authenticity_token, form_authenticity_token
+        = hidden_field_tag :place_id, "10"
+        ul.rounded
+          li
+            = text_area_tag(:review)
+        a#submit_review style="margin-top: 10px; margin-bottom: 10px; color: rgba(0, 0, 0, 0.901961);" href="#" class="whiteButton"
+          |Submit Review
+        br
+    - else
+      ul.edgetoedge
+        li
+          |(You have to signin to post review)
+    ul.edgetoedge
+      li
+        h2
+          |Reviews
+    .reviews
+    ul.edgetoedge
+      li
+        center
           h4
             |EatMe
 
@@ -129,9 +151,4 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
         center
           h4
             |EatMe
-
-  div id="_=_"
-    ul.edgetoedge
-      li
-        |whaaat
 

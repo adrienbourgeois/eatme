@@ -127,7 +127,6 @@ just_eaten_loading = ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
-      console.log ret
       if ret.length is 0
         end_just_eaten = true
       else
@@ -176,6 +175,7 @@ show_place = (id) ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
+     console.log ret
      if ret.length == 0
       li = $("<li><center><p>No results found</p></center></li>")
       $("ul.edgetoedge#show_place").append(li)
@@ -198,8 +198,25 @@ show_place = (id) ->
       li.append(vicinity)
       li.append(link2)
       $("ul.edgetoedge#show_place").append(li)
+
+      reviews_div = $(".reviews")
+      reviews = ret['reviews']
+      for review in reviews
+        review_div = $("<div class='info view' style='text-align: left;'></div>")
+        author = $("<p><img src=#{review['user']['image']}> #{review['user']['name']} (#{review['created_at']})</p>")
+        body_review = $("<p>#{review['body']}</p>")
+        review_div.append(author)
+        review_div.append(body_review)
+        reviews_div.prepend(review_div)
+      if reviews.length is 0
+        review = $("<div class='info view' style='text-align: left;'>No reviews so far</div>")
+        reviews_div.prepend(review)
+
+
     beforeSend: ->
+     $("input[name='place_id'][type='hidden']").val(id)
      $("ul.edgetoedge#show_place").find("li").remove()
+     $(".reviews").find("div").remove()
      spinner_on("#spinner_show_place")
     complete: ->
      show_map_listener()
@@ -238,10 +255,8 @@ popular_places = ->
 ##################################################################################
 
 $(document).on "page:change", ->
-
   #location_page = window.location.pathname
   location_page = $("#location_page").data("location_page")
-  console.log location_page
 
   if location_page is "home"
     close_places(0.3)
