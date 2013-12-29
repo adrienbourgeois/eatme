@@ -175,7 +175,6 @@ show_place = (id) ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
-     console.log ret
      if ret.length == 0
       li = $("<li><center><p>No results found</p></center></li>")
       $("ul.edgetoedge#show_place").append(li)
@@ -257,7 +256,7 @@ popular_places = ->
 
 $(document).on "page:change", ->
   location_page = $("#location_page").data("location_page")
-  $('#star').raty()
+  $('#star').raty({ width: 250 })
 
 
   if location_page is "home"
@@ -279,8 +278,6 @@ $(document).on "page:change", ->
       anchor = window.location.hash
       if anchor is "#just_eaten"
         if last_page != "#show_place"
-          #$("#star").data("score",3)
-          #$("input[name='score']").val(3)
           end_just_eaten = false
           page_just_eaten = 1
           $("ul.edgetoedge#gallery").find("li").remove()
