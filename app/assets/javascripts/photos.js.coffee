@@ -204,10 +204,11 @@ show_place = (id) ->
       for review in reviews
         review_div = $("<div class='info view' style='text-align: left;'></div>")
         author = $("<p><img src=#{review['user']['image']}> #{review['user']['name']} (#{review['created_at']})</p>")
+        div_star = $("<div id=star#{review['id']}></div>")
         body_review = $("<p>#{review['body']}</p>")
-        review_div.append(author)
-        review_div.append(body_review)
+        review_div.append(author).append(div_star).append(body_review)
         reviews_div.prepend(review_div)
+        $("#star#{review['id']}").raty({readOnly: true, score: review['note']})
       if reviews.length is 0
         review = $("<div class='info view' style='text-align: left;'>No reviews so far</div>")
         reviews_div.prepend(review)
@@ -255,8 +256,9 @@ popular_places = ->
 ##################################################################################
 
 $(document).on "page:change", ->
-  #location_page = window.location.pathname
   location_page = $("#location_page").data("location_page")
+  $('#star').raty()
+
 
   if location_page is "home"
     close_places(0.3)
@@ -277,6 +279,8 @@ $(document).on "page:change", ->
       anchor = window.location.hash
       if anchor is "#just_eaten"
         if last_page != "#show_place"
+          #$("#star").data("score",3)
+          #$("input[name='score']").val(3)
           end_just_eaten = false
           page_just_eaten = 1
           $("ul.edgetoedge#gallery").find("li").remove()

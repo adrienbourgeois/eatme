@@ -104,6 +104,9 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
         = hidden_field_tag :place_id, "10"
         ul.rounded
           li
+            #star data-score="3"
+        ul.rounded
+          li
             = text_area_tag(:review)
         a#submit_review style="margin-top: 10px; margin-bottom: 10px; color: rgba(0, 0, 0, 0.901961);" href="#" class="whiteButton"
           |Submit Review
