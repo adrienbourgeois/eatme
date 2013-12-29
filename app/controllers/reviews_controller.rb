@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
 
+  before_action :check_user_rights, only: [:create]
+
   def create
     @user = current_user
     @review = Review.new(place_id: params[:place_id], user_id: @user.id, body: params[:review])
@@ -8,4 +10,9 @@ class ReviewsController < ApplicationController
     end
   end
 
+  private
+
+  def check_user_rights
+    redirect_to root_path unless current_user
+  end
 end
