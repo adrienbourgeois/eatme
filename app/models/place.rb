@@ -1,5 +1,3 @@
-require 'pry'
-
 class Place < ActiveRecord::Base
   geocoded_by :latitude  => :latitude, :longitude => :longitude
 

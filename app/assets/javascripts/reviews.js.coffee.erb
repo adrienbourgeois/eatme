@@ -1,0 +1,41 @@
+listen_submit_review = (event) ->
+  event.preventDefault()
+  if $("input[name='score']").val() is ""
+    alert "Your rating can't be blank"
+    return true
+  if $("textarea[name='review']").val() is ""
+    alert "Your review can't be blank"
+    return true
+  form = $("form[name='review']")
+  $.ajax
+    url: form.attr("action")
+    type: "POST"
+    success: (review) ->
+      if review is "<%= REVIEW_ALREADY_EXISTS_MESSAGE %>"
+        alert "<%= REVIEW_ALREADY_EXISTS_MESSAGE %>"
+      else
+        reviews_div = $(".reviews")
+        review_div = $("<div class='info view' style='text-align: left;'></div>")
+        author = $("<p><img src=#{review['user']['image']}> #{review['user']['name']} (#{review['created_at']})</p>")
+        div_star = $("<div id=star#{review['id']}></div>")
+        body_review = $("<p>#{review['body']}</p>")
+        review_div.append(author).append(div_star).append(body_review)
+        reviews_div.prepend(review_div)
+        $("#star#{review['id']}").raty({readOnly: true, score: review['note']})
+        $(".info.view.empty")[0].style.display = "none"
+    beforeSend: ->
+      $("#submit_review").off "click"
+      $("textarea[name='review']").attr("disabled",true)
+      $("#submit_review").removeAttr("href").text("").append($("<img src=<%= asset_path 'spiffygif.gif' %> >"))
+    complete: ->
+      $(".form_review")[0].style.display = "none"
+      $("textarea[name='review']").val("")
+      $("textarea[name='review']").attr("disabled",false)
+      $("#submit_review").attr("href","#").text("Submit Review").find("img").remove()
+      $("#submit_review").on "click", (event) ->
+        listen_submit_review(event)
+    data: form.serialize()
+
+$ ->
+  $("#submit_review").on "click", (event) ->
+    listen_submit_review(event)

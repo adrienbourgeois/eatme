@@ -209,8 +209,9 @@ show_place = (id) ->
         reviews_div.prepend(review_div)
         $("#star#{review['id']}").raty({readOnly: true, score: review['note']})
       if reviews.length is 0
-        review = $("<div class='info view' style='text-align: left;'>No reviews so far</div>")
-        reviews_div.prepend(review)
+        $(".info.view.empty")[0].style.display = "block"
+      else
+        $(".info.view.empty")[0].style.display = "none"
 
 
     beforeSend: ->
@@ -219,6 +220,7 @@ show_place = (id) ->
      $(".reviews").find("div").remove()
      spinner_on("#spinner_show_place")
     complete: ->
+     $(".form_review")[0].style.display = "inline"
      show_map_listener()
      spinner_off("#spinner_show_place")
      listen_to_swipe()
