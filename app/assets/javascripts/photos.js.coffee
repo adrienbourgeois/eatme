@@ -103,7 +103,7 @@ close_places_loading = (radius) ->
         for j in [0..ret[i]['photos'].length-1]
           image = $("<img src=\"#{ret[i]['photos'][j]['image_low_resolution']}\"></img>")
           imgs_list.append(image)
-        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
+        link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
         vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
         li.append(center)
         li.append(vicinity)
@@ -118,6 +118,7 @@ close_places_loading = (radius) ->
      spinner_off("#spinner_close_places")
      load_more_listener_on()
      listen_to_swipe()
+     show_place_listener()
 
 ##################################################################################
 
@@ -188,7 +189,6 @@ show_place = (id) ->
       imgs_list = $("<div class='imgs' data-current_img=0></div>")
       content.append(imgs_list)
       for j in [0..ret['photos'].length-1]
-      #for j in [0..2]
         image = $("<img src=\"#{ret['photos'][j]['image_low_resolution']}\"></img>")
         imgs_list.append(image)
       link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret['latitude']}\' data-longitude=\'#{ret['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button></div>")
