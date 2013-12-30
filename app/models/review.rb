@@ -5,7 +5,7 @@ class Review < ActiveRecord::Base
   validates :body, :note, presence: true
   validates :note, numericality: { only_integer: true }
 
-  before_destroy :unrate_place
+  #before_destroy :unrate_place
 
   private
 
