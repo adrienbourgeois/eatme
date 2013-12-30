@@ -20,4 +20,14 @@ class Place < ActiveRecord::Base
     self.near([latitude,longitude], radius)
   end
 
+  def update_rate(rate)
+    rate > 0.0 ? incr = 1 : incr = -1
+    self.with_lock do
+      self.rate = (self.rate*self.number_of_reviews+rate)/(self.number_of_reviews+incr)
+      self.number_of_reviews += incr
+      self.rate = -1.0 if number_of_reviews == 0
+      self.save
+    end
+  end
+
 end

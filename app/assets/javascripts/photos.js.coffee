@@ -93,7 +93,8 @@ close_places_loading = (radius) ->
      else
       for i in [0..ret.length-1]
         li = $("<li></li>")
-        name = $("<h3>#{ret[i]['name']}</h3>")
+        #name = $("<h3>#{ret[i]['name']}</h3>")
+        name = $("<h3>#{ret[i]['name']}<div id=place_star_close_places#{ret[i]['id']}></div></h3>")
         li.append(name)
         center = $("<div></div>")
         content = $("<div id='content'></div>")
@@ -105,10 +106,10 @@ close_places_loading = (radius) ->
           imgs_list.append(image)
         link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
         vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
-        li.append(center)
-        li.append(vicinity)
-        li.append(link2)
+        li.append(center).append(vicinity).append(link2)
         $("ul.edgetoedge#close_places").append(li)
+        if ret[i]['number_of_reviews'] > 0
+          $("#place_star_close_places#{ret[i]['id']}").raty({ width: 250, readOnly: true, score: ret[i]['rate']} )
       page_close_places++
       show_map_listener()
     beforeSend: ->
@@ -134,17 +135,15 @@ just_eaten_loading = ->
         for i in [0..ret.length-1]
           li = $("<li></li>")
           image = $("<center><img src=#{ret[i]['image_low_resolution']}></img></center>")
-          titre = $("<h3>#{ret[i]['place']['name']}</h3>")
+          name = $("<h3>#{ret[i]['place']['name']}<div id=place_star_just_eaten#{ret[i]['place']['id']}></div></h3>")
           button = $("<div class='vicinity'></div>")
           link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['place']['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
           minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
           vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
-          li. append titre
-          li.append image
-          li.append minutes_ago
-          li.append vicinity
-          li.append link2
+          li.append(name).append(image).append(minutes_ago).append(vicinity).append(link2)
           $("ul.edgetoedge#gallery").append li
+          if ret[i]['place']['number_of_reviews'] > 0
+            $("#place_star_just_eaten#{ret[i]['place']['id']}").raty({ width: 250, readOnly: true, score: ret[i]['place']['rate']} )
         page_just_eaten++
     beforeSend: ->
       load_more_listener_off()
@@ -181,7 +180,7 @@ show_place = (id) ->
       $("ul.edgetoedge#show_place").append(li)
      else
       li = $("<li></li>")
-      name = $("<h3>#{ret['name']}</h3>")
+      name = $("<h3>#{ret['name']}<div id=place_star_show_place#{ret['id']}></div></h3>")
       li.append(name)
       center = $("<div></div>")
       content = $("<div id='content'></div>")
@@ -197,6 +196,8 @@ show_place = (id) ->
       li.append(vicinity)
       li.append(link2)
       $("ul.edgetoedge#show_place").append(li)
+      if ret['number_of_reviews'] > 0
+        $("#place_star_show_place#{ret['id']}").raty({ width: 250, readOnly: true, score: ret['rate']} )
 
       reviews_div = $(".reviews")
       reviews = ret['reviews']

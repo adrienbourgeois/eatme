@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131227065238) do
+ActiveRecord::Schema.define(version: 20131230124239) do
 
   create_table "information", force: true do |t|
     t.string   "name"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20131227065238) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "number_of_reviews", default: 0
+    t.float    "rate",              default: -1.0
   end
 
   add_index "places", ["google_id"], name: "index_places_on_google_id"
