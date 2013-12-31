@@ -11,6 +11,6 @@ class Review < ActiveRecord::Base
 
   def unrate_place
     place = Place.find(self.place_id)
-    place.update_rate(-self.note)
+    place.update_rate(self.note, -1)
   end
 end
