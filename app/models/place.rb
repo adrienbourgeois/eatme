@@ -21,6 +21,7 @@ class Place < ActiveRecord::Base
   end
 
   def update_rate(rate, incr)
+    raise ArgumentError, "The rating is not correct" unless 1.0 <= rate and rate <= 5.0
     self.with_lock do
       if self.number_of_reviews == 1 and incr == -1
         self.rate = -1.0
