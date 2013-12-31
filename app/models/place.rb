@@ -27,7 +27,7 @@ class Place < ActiveRecord::Base
         self.rate = -1.0
         self.number_of_reviews = 0
       else
-        self.rate = (self.rate*self.number_of_reviews+rate)/(self.number_of_reviews+incr)
+        self.rate = (self.rate*self.number_of_reviews+rate)/(self.number_of_reviews*incr+incr)
         self.number_of_reviews += incr
       end
       self.save
