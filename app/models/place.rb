@@ -20,18 +20,14 @@ class Place < ActiveRecord::Base
     self.near([latitude,longitude], radius)
   end
 
-  def update_rate(rate, incr)
-    raise ArgumentError, "The rating is not correct" unless 1.0 <= rate and rate <= 5.0
-    self.with_lock do
-      if self.number_of_reviews == 1 and incr == -1
-        self.rate = -1.0
-        self.number_of_reviews = 0
-      else
-        self.rate = (self.rate*self.number_of_reviews+rate)/(self.number_of_reviews*incr+incr)
-        self.number_of_reviews += incr
-      end
-      self.save
+  def update_rate
+    self.number_of_reviews = self.reviews.count
+    if self.number_of_reviews == 0
+      self.rate = -1.0
+    else
+      self.rate = self.reviews.average(:note).to_f
     end
+    self.save
   end
 
 end

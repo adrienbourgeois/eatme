@@ -10,7 +10,6 @@ class ReviewsController < ApplicationController
       render json: REVIEW_ALREADY_EXISTS_MESSAGE.to_json
     else
       if @review.save
-        @place.update_rate(@review.note,1)
         render json: @review.to_json(include: :user)
       else
         render json: @review.errors.to_json
