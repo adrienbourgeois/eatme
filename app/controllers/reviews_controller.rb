@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
   def create
     @user = current_user
     @place = Place.find(params[:place_id])
-    @review = Review.new(place_id: @place.id, user_id: @user.id, body: params[:review], note: params[:score])
+    @review = Review.new(place_id: @place.id, user_id: @user.id, body: params[:review], rate: params[:score])
     if Review.where(place_id: @review.place_id, user_id: @review.user_id).exists?
       render json: REVIEW_ALREADY_EXISTS_MESSAGE.to_json
     else

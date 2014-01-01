@@ -108,8 +108,8 @@ close_places_loading = (radius) ->
         vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
         li.append(center).append(vicinity).append(link2)
         $("ul.edgetoedge#close_places").append(li)
-        if ret[i]['number_of_reviews'] > 0
-          $("#place_star_close_places#{ret[i]['id']}").raty({ width: 250, readOnly: true, score: ret[i]['rate']} )
+        if ret[i]['reviews_count'] > 0
+          $("#place_star_close_places#{ret[i]['id']}").raty({ width: 250, readOnly: true, score: ret[i]['rate_average']} )
       page_close_places++
       show_map_listener()
     beforeSend: ->
@@ -142,8 +142,8 @@ just_eaten_loading = ->
           vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
           li.append(name).append(image).append(minutes_ago).append(vicinity).append(link2)
           $("ul.edgetoedge#gallery").append li
-          if ret[i]['place']['number_of_reviews'] > 0
-            $("#place_star_just_eaten#{ret[i]['id']}#{ret[i]['place']['id']}").raty({ width: 250, readOnly: true, score: ret[i]['place']['rate']} )
+          if ret[i]['place']['reviews_count'] > 0
+            $("#place_star_just_eaten#{ret[i]['id']}#{ret[i]['place']['id']}").raty({ width: 250, readOnly: true, score: ret[i]['place']['rate_average']} )
         page_just_eaten++
     beforeSend: ->
       load_more_listener_off()
@@ -196,8 +196,8 @@ show_place = (id) ->
       li.append(vicinity)
       li.append(link2)
       $("ul.edgetoedge#show_place").append(li)
-      if ret['number_of_reviews'] > 0
-        $("#place_star_show_place#{ret['id']}").raty({ width: 250, readOnly: true, score: ret['rate']} )
+      if ret['reviews_count'] > 0
+        $("#place_star_show_place#{ret['id']}").raty({ width: 250, readOnly: true, score: ret['rate_average']} )
 
       reviews_div = $(".reviews")
       reviews = ret['reviews']
@@ -208,7 +208,7 @@ show_place = (id) ->
         body_review = $("<p>#{review['body']}</p>")
         review_div.append(author).append(div_star).append(body_review)
         reviews_div.prepend(review_div)
-        $("#star#{review['id']}").raty({readOnly: true, score: review['note']})
+        $("#star#{review['id']}").raty({readOnly: true, score: review['rate']})
       if reviews.length is 0
         $(".info.view.empty")[0].style.display = "block"
       else

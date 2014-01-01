@@ -20,12 +20,12 @@ class Place < ActiveRecord::Base
     self.near([latitude,longitude], radius)
   end
 
-  def update_rate
-    self.number_of_reviews = self.reviews.count
-    if self.number_of_reviews == 0
-      self.rate = -1.0
+  def update_rate_average
+    self.reviews_count = self.reviews.count
+    if self.reviews_count == 0
+      self.rate_average = -1.0
     else
-      self.rate = self.reviews.average(:note).to_f
+      self.rate_average = self.reviews.average(:rate).to_f
     end
     self.save
   end

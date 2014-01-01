@@ -21,7 +21,7 @@ listen_submit_review = (event) ->
         body_review = $("<p>#{review['body']}</p>")
         review_div.append(author).append(div_star).append(body_review)
         reviews_div.prepend(review_div)
-        $("#star#{review['id']}").raty({readOnly: true, score: review['note']})
+        $("#star#{review['id']}").raty({readOnly: true, score: review['rate']})
         $(".info.view.empty")[0].style.display = "none"
     beforeSend: ->
       $("#submit_review").off "click"
