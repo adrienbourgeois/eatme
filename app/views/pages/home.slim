@@ -18,7 +18,9 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
           = image_tag current_user.image
           |  signed in as #{current_user.name}
         - else
-          = link_to "Sign in with facebook ", "/auth/facebook/", id: "sign_in", rel: "external"
+            a#sign_in  href="/auth/facebook/" rel="external"
+              |Sign in with facebook &nbsp;
+              = image_tag 'facebook_small_logo.jpg'
       li
         label
           |Distance
@@ -51,7 +53,9 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
           = link_to "Sign out", signout_path, { id: "sign_out",  rel: "external" }
       - else
         li
-          = link_to "Sign in with facebook ", "/auth/facebook/", id: "sign_in", rel: "external"
+          a#sign_in  href="/auth/facebook/" rel="external"
+            |Sign in with facebook &nbsp;
+            = image_tag 'facebook_small_logo.jpg'
       li
         a href="#about"
           |About

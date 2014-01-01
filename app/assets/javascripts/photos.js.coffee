@@ -221,7 +221,8 @@ show_place = (id) ->
      $(".reviews").find("div").remove()
      spinner_on("#spinner_show_place")
     complete: ->
-     $(".form_review")[0].style.display = "inline"
+     if (form_review = $(".form_review")).length is 1
+      form_review[0].style.display = "inline"
      show_map_listener()
      spinner_off("#spinner_show_place")
      listen_to_swipe()
