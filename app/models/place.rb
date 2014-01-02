@@ -3,7 +3,7 @@ class Place < ActiveRecord::Base
 
   has_many :photos
   has_many :reviews
-  validates :google_id,:name,:types,:vicinity,:latitude,:longitude, presence: true
+  validates :google_id,:name,:types,:vicinity,:latitude,:longitude,:city_code,:city_name, presence: true
   validates :google_id, numericality: { only_integer: true }
   validates :latitude, :longitude, numericality: true
 

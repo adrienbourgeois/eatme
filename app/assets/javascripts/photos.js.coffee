@@ -139,7 +139,7 @@ just_eaten_loading = ->
           button = $("<div class='vicinity'></div>")
           link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['place']['latitude']}\' data-longitude=\'#{ret[i]['place']['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['place']['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
           minutes_ago = $("<div class='time'>#{ret[i]['minutes_ago']}</div>")
-          vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}</div>")
+          vicinity = $("<div class='vicinity'>#{ret[i]['place']['vicinity']}<br>[#{ret[i]['place']['city_name']}]</div>")
           li.append(name).append(image).append(minutes_ago).append(vicinity).append(link2)
           $("ul.edgetoedge#gallery").append li
           if ret[i]['place']['reviews_count'] > 0
