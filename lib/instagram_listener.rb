@@ -7,7 +7,7 @@ module InstagramListener
     city_area[0] < long && long < city_area[1] && city_area[2] < lat && lat < city_area[3]
   end
 
-  def city_code lat, long
+  def city_hash lat, long
     CITIES.each { |city| return city if in_city?(lat, long, city) }
     return false
   end
@@ -22,6 +22,7 @@ module InstagramListener
                                 name: place_name)
     if spots.count == 1
       spot = spots[0]
+      city = city_hash latitude, longitude
       google_id = spot.id[0..12].to_i(26)
       {
         vicinity: spot.vicinity,
@@ -29,7 +30,9 @@ module InstagramListener
         types: spot.types.to_s,
         latitude: spot.lat,
         longitude: spot.lng,
-        google_id: google_id
+        google_id: google_id,
+        city_code: city[:code],
+        city_name: city[:name]
       }
     else
       nil
@@ -84,7 +87,7 @@ module InstagramListener
         if place[:location] && place[:location][:name] && place['type'] == "image"
           latitude = place['location']['latitude']
           longitude = place['location']['longitude']
-          if city_code(latitude, longitude)
+          if city_hash(latitude, longitude)
             instagram_id = place['id'].split('_')[0].to_i
             if is_not_in_db? instagram_id
               google_places_match place, latitude, longitude, instagram_id
