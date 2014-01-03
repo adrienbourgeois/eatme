@@ -1,6 +1,7 @@
 Showmeurfood::Application.routes.draw do
 
-  root 'pages#home'
+  #root 'pages#home'
+  root 'pages#signin'
 
   get 'pages/home', to: 'pages#home', as: 'home'
   get 'pages/signin', to: 'pages#signin'

@@ -41,7 +41,11 @@ module InstagramListener
 
   def instagram_query
     places = []
-    TAGS.each { |ht| places += Instagram.tag_recent_media(ht, { count: 100 })}
+    begin
+      TAGS.each { |ht| places += Instagram.tag_recent_media(ht, { count: 100 })}
+    rescue
+      places = nil
+    end
     return places
   end
 
