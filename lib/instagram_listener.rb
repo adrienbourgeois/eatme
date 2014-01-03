@@ -17,9 +17,13 @@ module InstagramListener
   end
 
   def google_find place_name, latitude, longitude
-    spots = Client_google.spots(latitude, longitude, radius: 100,
-                                types: ['restaurant','food','cafe','hotel','bar'],
-                                name: place_name)
+    begin
+      spots = Client_google.spots(latitude, longitude, radius: 100,
+                                  types: ['restaurant','food','cafe','hotel','bar'],
+                                  name: place_name)
+    rescue
+      return nil
+    end
     if spots.count == 1
       spot = spots[0]
       city = city_hash latitude, longitude
@@ -87,19 +91,21 @@ module InstagramListener
     while (Time.now - start).to_i < MAX_EXECUTION_TIME
       places = instagram_query
       puts "round##{count}"
-      places.each do |place|
-        if place[:location] && place[:location][:name] && place['type'] == "image"
-          latitude = place['location']['latitude']
-          longitude = place['location']['longitude']
-          if city_hash(latitude, longitude)
-            instagram_id = place['id'].split('_')[0].to_i
-            if is_not_in_db? instagram_id
-              google_places_match place, latitude, longitude, instagram_id
+      if places
+        places.each do |place|
+          if place[:location] && place[:location][:name] && place['type'] == "image"
+            latitude = place['location']['latitude']
+            longitude = place['location']['longitude']
+            if city_hash(latitude, longitude)
+              instagram_id = place['id'].split('_')[0].to_i
+              if is_not_in_db? instagram_id
+                google_places_match place, latitude, longitude, instagram_id
+              end
+              puts "id: #{count}"
             end
-            puts "id: #{count}"
           end
+          count += 1
         end
-        count += 1
       end
       puts "chrono: #{(Time.now-start).to_i/1.minute} min"
       sleep ROUND_SLEEP_TIME
