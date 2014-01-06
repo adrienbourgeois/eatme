@@ -139,6 +139,10 @@ FactoryGirl.define do
     vicinity "333 opera quay, Sydney"
     latitude '-33.0'
     longitude '180.0'
+    reviews_count 0
+    rate_average '-1.0'
+    city_code 1
+    city_name 'Italia'
   end
 
   factory :place2, class: Place do
@@ -148,6 +152,10 @@ FactoryGirl.define do
     vicinity "80 Commonwealth Street, Surry Hills"
     latitude '-33.0'
     longitude '181.0'
+    reviews_count 0
+    rate_average '-1.0'
+    city_code 2
+    city_name 'Sydney'
   end
 
 end
