@@ -11,3 +11,7 @@ task :update_popular_places => :environment do
   PopularPlaces.update_popular_places
 end
 
+task :call_page => :environment do
+   uri = URI.parse('http://eatme.heroku.com/')
+   Net::HTTP.get(uri)
+end
