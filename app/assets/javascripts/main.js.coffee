@@ -265,7 +265,7 @@ $(document).on "page:change", ->
 
 
   if location_page is "home"
-    close_places(0.3)
+    close_places(1.0)
     listen_to_swipe();
 
     $("select#distance").change ->
