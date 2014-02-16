@@ -16,6 +16,7 @@ gem 'instagram'
 gem 'google_places'
 gem 'geocoder'
 gem 'omniauth-facebook'
+gem 'newrelic_rpm'
 
 # Use sqlite3 as the database for Active Record
 group :development, :test do
