@@ -15,6 +15,7 @@ end_close_places = false
 loading = false
 last_page = ''
 radius_gv = -1
+filter_keyword_gv = ''
 
 ##################################################################################
 
@@ -67,7 +68,7 @@ load_more_photos_when_page_bottom_reached = ->
     if window.location.hash == "#just_eaten" && !end_just_eaten && !loading
       just_eaten_loading(event)
     if window.location.hash == "#close_places" && radius_gv != -1 && !end_close_places
-      close_places_loading(radius_gv)
+      close_places_loading(radius_gv,filter_keyword_gv)
 
 load_more_listener_on = ->
   $(window).bind("scroll",load_more_photos_when_page_bottom_reached)
@@ -79,12 +80,13 @@ load_more_listener_off = ->
 
 ##################################################################################
 
-close_places_loading = (radius) ->
+close_places_loading = (radius,filter_keyword) ->
   $.ajax
-    url: "/places?page=#{page_close_places}&latitude=#{latitude_user}&longitude=#{longitude_user}&radius=#{radius}"
+    url: "/places?page=#{page_close_places}&latitude=#{latitude_user}&longitude=#{longitude_user}&radius=#{radius}&filter_keyword=#{filter_keyword}"
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
+     console.log ret
      if ret.length == 0
        if page_close_places == 1
         li = $("<li><center><p>No results found</p></center></li>")
@@ -93,7 +95,6 @@ close_places_loading = (radius) ->
      else
       for i in [0..ret.length-1]
         li = $("<li></li>")
-        #name = $("<h3>#{ret[i]['name']}</h3>")
         name = $("<h3>#{ret[i]['name']}<div id=place_star_close_places#{ret[i]['id']}></div></h3>")
         li.append(name)
         center = $("<div></div>")
@@ -101,8 +102,8 @@ close_places_loading = (radius) ->
         center.append(content)
         imgs_list = $("<div class='imgs' data-current_img=0></div>")
         content.append(imgs_list)
-        for j in [0..ret[i]['photos'].length-1]
-          image = $("<img src=\"#{ret[i]['photos'][j]['image_low_resolution']}\"></img>")
+        for j in [0..ret[i]['photos_filtered'].length-1]
+          image = $("<img src=\"#{ret[i]['photos_filtered'][j]['image_low_resolution']}\"></img>")
           imgs_list.append(image)
         link2 = $("<div class='vicinity'><button type='button' class='show_map btn btn-default btn-lg' data-toggle='modal' data-target='#myModal' data-latitude=\'#{ret[i]['latitude']}\' data-longitude=\'#{ret[i]['longitude']}\'><span class='glyphicon glyphicon-map-marker'></span></button> <button type='button' class='show_place btn btn-default btn-lg' data-place_id=#{ret[i]['id']}><span class='glyphicon glyphicon-arrow-right'></span></button></div>")
         vicinity = $("<div class='vicinity'>#{ret[i]['vicinity']}</div>")
@@ -155,14 +156,14 @@ just_eaten_loading = ->
 
 ##################################################################################
 
-close_places = (radius)->
+close_places = (radius,filter_keyword)->
   $("ul.edgetoedge#close_places").find("li").remove()
   spinner_on("#spinner_close_places")
   if(navigator.geolocation)
     navigator.geolocation.getCurrentPosition (position) ->
       latitude_user = position.coords.latitude
       longitude_user = position.coords.longitude
-      close_places_loading(radius)
+      close_places_loading(radius,filter_keyword)
   else
     alert "Impossible to find your location"
 
@@ -265,15 +266,17 @@ $(document).on "page:change", ->
 
 
   if location_page is "home"
-    close_places('1.0')
+    close_places('1.0','')
     listen_to_swipe();
 
-    $("select#distance").change ->
-      radius = $(this).val()
+    $("#search").on "click", (event) ->
+      radius = $("select#distance").val()
+      filter_keyword = $("select#filter_keyword").val()
       end_close_places = false
       page_close_places = 1
-      close_places(radius)
+      close_places(radius,filter_keyword)
       radius_gv = radius
+      filter_keyword_gv = filter_keyword
 
     $("#myModal").on "shown.bs.modal", ->
       google.maps.event.trigger map, "resize"

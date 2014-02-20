@@ -8,4 +8,21 @@ class Photo < ActiveRecord::Base
 
   scope :checked, -> { where(checked: true) }
 
+  FILTER_KEYWORDS = [
+    'glutenfree',
+    'dessert',
+    'bbq',
+    'ribs',
+    'healthy',
+    'pizza',
+    'veg',
+    'chinese',
+    'thai',
+    'italian',
+    'sea',
+    'pancake',
+    'icecream',
+    'french'
+  ]
+
 end

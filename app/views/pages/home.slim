@@ -26,7 +26,15 @@ script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/jav
           |Distance
         = select_tag(:distance, options_for_select(Place::RADIUS.map { |r| ["#{r}mi",r] },Place::RADIUS[3]))
       li
+        label
+          |Filter
+        = select_tag(:filter_keyword, \
+        options_for_select((Photo::FILTER_KEYWORDS.map { |kw| [kw,kw] } \
+        + [['none','']]).sort,''))
+      li
         |(swipe left on a picture to see the other ones)
+    a#search style="margin-top: 10px; margin-bottom: 10px; color: rgba(0, 0, 0, 0.901961);" href="#" class="whiteButton"
+      |Go
     ul.edgetoedge#close_places
     ul.edgetoedge
       li
