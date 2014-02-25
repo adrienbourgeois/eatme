@@ -79,7 +79,7 @@ GEM
       railties (>= 3.2, < 5.0)
     formatador (0.2.4)
     fssm (0.2.10)
-    geocoder (1.1.8)
+    geocoder (1.1.9)
     google_places (0.20.0)
       httparty
     guard (2.2.4)

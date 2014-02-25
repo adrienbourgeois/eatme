@@ -12,6 +12,7 @@ describe "Close Places", js: true  do
     visit root_path
     simulate_location(-33.0,180.0)
     select "0.1", from: 'distance'
+    find("a#search").click
     wait_for_ajax
     page.should have_content("Adriatic")
   end
@@ -20,6 +21,7 @@ describe "Close Places", js: true  do
     visit root_path
     simulate_location(-33.0,181.0)
     select "0.1", from: 'distance'
+    find("a#search").click
     wait_for_ajax
     page.should have_content("Paramount Coffee Project")
   end
@@ -28,6 +30,7 @@ describe "Close Places", js: true  do
     visit root_path
     simulate_location(-34.0,180.0)
     select "0.1", from: 'distance'
+    find("a#search").click
     wait_for_ajax
     page.should have_content("No results found")
   end

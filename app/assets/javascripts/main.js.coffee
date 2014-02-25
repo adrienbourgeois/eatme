@@ -261,6 +261,7 @@ popular_places = ->
 
 $(document).on "page:change", ->
 #$ ->
+main = ->
   location_page = $("#location_page").data("location_page")
   $('#star').raty({ width: 250 })
 

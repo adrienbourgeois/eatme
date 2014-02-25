@@ -19,8 +19,8 @@ class Place < ActiveRecord::Base
 
   def self.close(latitude,longitude,radius,filter_keyword)
     raise ArgumentError, "The radius is not correct" unless RADIUS.map(&:to_s).include? radius
-    #raise ArgumentError, "The filter keyword is not correct" unless Photo::FILTER_KEYWORD.include? filter_keyword
-    self.near([latitude,longitude], radius).joins(:photos)
+    raise ArgumentError, "The filter keyword is not correct" unless (Photo::FILTER_KEYWORDS+[""]).include? filter_keyword
+    self.near([latitude,longitude], radius).joins(:photos).preload(:photos)
       .where("photos.tags like '%#{filter_keyword}%'").uniq(:id)
   end
 
