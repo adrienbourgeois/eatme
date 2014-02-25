@@ -86,7 +86,6 @@ close_places_loading = (radius,filter_keyword) ->
     dataType: "json"
     contentType: "application/json"
     success: (ret) ->
-     console.log ret
      if ret.length == 0
        if page_close_places == 1
         li = $("<li><center><p>No results found</p></center></li>")
@@ -261,7 +260,6 @@ popular_places = ->
 
 $(document).on "page:change", ->
 #$ ->
-main = ->
   location_page = $("#location_page").data("location_page")
   $('#star').raty({ width: 250 })
 
