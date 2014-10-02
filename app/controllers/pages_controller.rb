@@ -1,7 +1,9 @@
 class PagesController < ApplicationController
 
   def home
-    @number_of_photos = Photo.where(checked:true).count
+    #@number_of_photos = Photo.where(checked:true).count
+    @number_of_photos = 1000000
+
   end
 
   def signin
