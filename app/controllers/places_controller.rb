@@ -9,7 +9,7 @@ class PlacesController < ApplicationController
       @places = @places.to_json
     end
     if params[:latitude] and params[:longitude]
-      @places = Place.close(params[:latitude], params[:longitude], params[:radius], params[:filter_keyword]).page(params[:page]).per(PER_PAGE)
+      @places = Place.page(params[:page]).per(PER_PAGE).close(params[:latitude], params[:longitude], params[:radius], params[:filter_keyword])
       Place.filter_keyword = params[:filter_keyword]
       @places = @places.to_json(methods: :photos_filtered)
     end
