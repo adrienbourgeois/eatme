@@ -12,10 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree ../../../vendor/assets/javascripts/jqtouch
-//= require ../../../vendor/assets/javascripts/touchSwipe/jquery.touchSwipe.min
-//= require ../../../vendor/assets/javascripts/touchSwipe/galleryPhotos
-//= require ../../../vendor/assets/javascripts/raty/jquery.raty.min
+//= require twitter/bootstrap
 //= require turbolinks
-//= require bootstrap
 //= require_tree .
