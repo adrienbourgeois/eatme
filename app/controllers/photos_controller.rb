@@ -1,5 +1,3 @@
-include ActionView::Helpers::DateHelper
-
 class PhotosController < ApplicationController
 
   PER_PAGE = 9
