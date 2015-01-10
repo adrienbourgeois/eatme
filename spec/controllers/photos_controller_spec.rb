@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'pp'
+require 'rails_helper'
 
 describe PhotosController do
   #render_views
