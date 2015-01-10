@@ -15,15 +15,20 @@
 @import "fontawesome/font-awesome";
 
 // Glyphicons
-//@import "twitter/bootstrap/glyphicons.less";
-
+// @import "twitter/bootstrap/glyphicons.less";
 // Your custom LESS stylesheets goes here
+@import "components/utilities.less";
+@import "views/photos/index";
 //
 // Since bootstrap was imported above you have access to its mixins which
 // you may use and inherit here
+@import "components/mixins.less";
 //
 // If you'd like to override bootstrap's own variables, you can do so here as well
 // See http://twitter.github.com/bootstrap/customize.html#variables for their names and documentation
-//
-// Example:
-// @link-color: #ff0000;
+@purple-base: #100832;
+@purple-darker:            lighten(@purple-base, 13.5%); // #222
+@purple-dark:              lighten(@purple-base, 20%);   // #333
+@purple:                   lighten(@purple-base, 33.5%); // #555
+@purple-light:             lighten(@purple-base, 46.7%); // #777
+@purple-lighter:           lighten(@purple-base, 93.5%); // #eee

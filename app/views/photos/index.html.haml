@@ -1,14 +1,17 @@
-.container
-  %h1 Recently eaten somewhere in the world
-  %br
+.photos
+  .container
+    %h1 Recently eaten somewhere in the world
+    %br
 
-  .row
-    -@photos.each do |photo|
-      .col-md-4
-        =image_tag photo.image_low_resolution
-        %br
-        ="#{time_ago_in_words(photo.updated_at)} ago"
-        %br
-        %h4=photo.place.vicinity
-        %br
-        =photo.place.city_name
+    .row
+      -@photos.each do |photo|
+        .col-md-4
+          .item
+            .align-center
+              %h3=photo.place.name
+              =image_tag photo.image_low_resolution
+              %br
+              ="#{time_ago_in_words(photo.updated_at)} ago"
+              %br
+              %h4=photo.place.vicinity
+              %h5=photo.place.city_name
