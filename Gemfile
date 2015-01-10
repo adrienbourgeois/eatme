@@ -5,6 +5,7 @@ gem 'rails', '4.2.0'
 gem 'pry'
 #gem 'bootstrap-sass', git: 'https://github.com/thomas-mcdonald/bootstrap-sass.git', branch: 'master'
 gem 'kaminari', '~> 0.16.1'
+gem 'bootstrap-kaminari-views'
 
 gem 'instagram'
 gem 'google_places'

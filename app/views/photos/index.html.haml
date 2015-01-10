@@ -15,3 +15,6 @@
               %br
               %h4=photo.place.vicinity
               %h5=photo.place.city_name
+
+    .align-center
+      = paginate @photos, :theme => 'twitter-bootstrap-3'
