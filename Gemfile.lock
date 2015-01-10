@@ -105,7 +105,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.2)
     jwt (1.2.0)
-    kaminari (0.14.1)
+    kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     less (2.6.0)
@@ -253,7 +253,7 @@ DEPENDENCIES
   instagram
   jbuilder (~> 1.2)
   jquery-rails
-  kaminari (~> 0.14.1)
+  kaminari (~> 0.16.1)
   less-rails (= 2.6.0)
   newrelic_rpm
   omniauth-facebook
