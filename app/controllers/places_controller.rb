@@ -11,7 +11,7 @@ class PlacesController < ApplicationController
     if params[:latitude] and params[:longitude]
       @places = Place.page(params[:page]).per(PER_PAGE).close(params[:latitude], params[:longitude], params[:radius], params[:filter_keyword])
       Place.filter_keyword = params[:filter_keyword]
-      @places = @places.to_json(methods: :photos_filtered)
+      @places = @places.to_json#(methods: :photos_filtered)
     end
     render json: @places
   end
