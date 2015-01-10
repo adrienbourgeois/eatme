@@ -1,3 +1,14 @@
 .container
-  %h1 Hellowwww
+  %h1 Recently eaten somewhere in the world
+  %br
 
+  .row
+    -@photos.each do |photo|
+      .col-md-4
+        =image_tag photo.image_low_resolution
+        %br
+        ="#{time_ago_in_words(photo.updated_at)} ago"
+        %br
+        %h4=photo.place.vicinity
+        %br
+        =photo.place.city_name

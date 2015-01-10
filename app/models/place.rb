@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: places
+#
+#  id            :integer          not null, primary key
+#  google_id     :integer
+#  name          :string(255)
+#  types         :string(255)
+#  vicinity      :string(255)
+#  latitude      :float
+#  longitude     :float
+#  created_at    :datetime
+#  updated_at    :datetime
+#  reviews_count :integer          default("0")
+#  rate_average  :float            default("-1.0")
+#  city_name     :string(255)
+#  city_code     :integer
+#
+
 class Place < ActiveRecord::Base
   geocoded_by :latitude  => :latitude, :longitude => :longitude
 
