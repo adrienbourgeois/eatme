@@ -1,13 +1,13 @@
 Showmeurfood::Application.routes.draw do
 
-  root 'pages#home'
+  # root 'pages#home'
   #root 'pages#signin'
 
-  get 'pages/home', to: 'pages#home', as: 'home'
-  get 'pages/signin', to: 'pages#signin'
+  # get 'pages/home', to: 'pages#home', as: 'home'
+  # get 'pages/signin', to: 'pages#signin'
 
   resources :photos, only: [:index]
-  resources :places, only: [:index, :show]
+  # resources :places, only: [:index, :show]
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')

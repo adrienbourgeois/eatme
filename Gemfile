@@ -20,7 +20,7 @@ gem 'haml-rails', '0.6.0'
 # Use sqlite3 as the database for Active Record
 group :development, :test do
   gem 'sqlite3'
-  gem 'rspec-rails', '~> 2.13.1'
+  gem 'rspec-rails', '3.1.0'
   gem 'database_cleaner'
 end
 
@@ -31,9 +31,9 @@ end
 
 group :test do
   gem 'factory_girl_rails'
-  gem 'guard-rspec'
-  gem 'selenium-webdriver', '2.35.1'
-  gem 'capybara', '2.1.0'
+  # gem 'guard-rspec'
+  # gem 'selenium-webdriver', '2.35.1'
+  gem 'capybara', '2.4.4'
 end
 
 # Use Uglifier as compressor for JavaScript assets
