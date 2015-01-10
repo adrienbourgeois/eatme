@@ -18,16 +18,25 @@
 #
 
 class Place < ActiveRecord::Base
+  # ----------------------------------------------------------------
+  # Elastic search config
+  # ----------------------------------------------------------------
   geocoded_by :latitude  => :latitude, :longitude => :longitude
 
-  has_many :photos
-  has_many :reviews
+  # ----------------------------------------------------------------
+  # Validation rules
+  # ----------------------------------------------------------------
   validates :google_id,:name,:types,:vicinity,:latitude,:longitude,:city_code,:city_name, presence: true
   validates :google_id, numericality: { only_integer: true }
   validates :latitude, :longitude, numericality: true
 
-  cattr_accessor :filter_keyword
+  # ----------------------------------------------------------------
+  # Associations
+  # ----------------------------------------------------------------
+  has_many :photos
+  has_many :reviews
 
+  cattr_accessor :filter_keyword
   RADIUS = [0.1,0.3,0.6,1.0,1.5,2.0,3.0,5.0]
 
   def self.popular
