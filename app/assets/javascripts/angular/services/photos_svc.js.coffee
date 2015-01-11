@@ -6,12 +6,12 @@ services.factory 'PhotosSvc', ['$http',($http) ->
 
   routes = {
     base: -> "/photos"
-    index: -> "#{routes.base()}"
+    index: (page = 0) -> "#{routes.base()}/?page=#{page}"
   }
 
   # Request the photos API to get the last photos
   service.last = (page) ->
-    $http.get(routes.index()).then(
+    $http.get(routes.index(page)).then(
       (success) ->
         success.data
     )
