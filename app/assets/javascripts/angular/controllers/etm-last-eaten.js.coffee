@@ -1,6 +1,7 @@
 controllers = angular.module('controllers')
 
-controllers.controller 'EtmLastEaten2Ctrl', ['$scope','PhotosSvc',($scope,PhotosSvc) ->
+controllers.controller 'EtmLastEaten2Ctrl',
+['$scope','PhotosSvc','MapSvc',($scope,PhotosSvc,MapSvc) ->
   $scope.messageFromController = "hello from controller"
 
   currentPage = 1
@@ -24,6 +25,10 @@ controllers.controller 'EtmLastEaten2Ctrl', ['$scope','PhotosSvc',($scope,Photos
           $scope.photos = $scope.photos.concat(photos)
           loading = false
       )
+
+  # Display a map in a modal with the place location
+  $scope.showLocation = (place) ->
+    MapSvc.open(place.latitude,place.longitude)
 
   init()
 

@@ -5,13 +5,15 @@ controllers = angular.module('controllers',[])
 app = angular.module("Eatme",
   [
     'ngRoute'
+    'ui.bootstrap'
+    'uiGmapgoogle-maps'
     'services'
     'directives'
     'controllers'
   ]
 )
 
-app.config ($routeProvider,$httpProvider) ->
+app.config ($routeProvider,$httpProvider,uiGmapGoogleMapApiProvider) ->
   $routeProvider
     .when '/lastly_eaten',
       controller: 'EtmLastEaten2Ctrl'
@@ -21,3 +23,9 @@ app.config ($routeProvider,$httpProvider) ->
 
   $httpProvider.defaults.headers.common['Accept'] = "application/json"
   $httpProvider.defaults.headers.common['Content-Type'] = "application/json"
+
+  uiGmapGoogleMapApiProvider.configure({
+    # key: 'your api key',
+    v: '3.17',
+    libraries: 'weather,geometry,visualization'
+  })

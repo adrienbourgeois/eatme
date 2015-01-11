@@ -12,9 +12,10 @@
           <!-- %br -->
           <h4>{{photo.place.vicinity}}</h4>
           <h5>{{photo.place.city_name}}</h5>
-  <!--         %button.btn.show-map{ 'data-latitude'=>photo.place.latitude, 'data-longitude'=>photo.place.longitude,  'data-toggle'=>'modal', 'data-target'=>'#map-modal' }
-            .fa.fa-map-marker
-   -->      </div>
+          <button class='btn' ng-click="showLocation(photo.place)">
+            <span class='fa fa-map-marker'></span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
