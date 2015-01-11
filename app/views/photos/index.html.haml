@@ -1,4 +1,5 @@
 .photos
+  =render partial:'shared/map'
   .container
     %h1 Recently eaten somewhere in the world
     %br
@@ -15,6 +16,8 @@
               %br
               %h4=photo.place.vicinity
               %h5=photo.place.city_name
+              %button.btn.show-map{ 'data-latitude'=>photo.place.latitude, 'data-longitude'=>photo.place.longitude,  'data-toggle'=>'modal', 'data-target'=>'#map-modal' }
+                .fa.fa-map-marker
 
     .align-center
       = paginate @photos, :theme => 'twitter-bootstrap-3'
