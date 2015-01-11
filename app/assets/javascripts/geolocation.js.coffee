@@ -9,5 +9,3 @@ $(document).on "page:change", ->
     navigator.geolocation.getCurrentPosition (position) ->
       setCookie('latitude',position.coords.latitude,1)
       setCookie('longitude',position.coords.longitude,1)
-      console.log 'position.coords'
-      console.log position.coords
