@@ -7,7 +7,7 @@ Showmeurfood::Application.routes.draw do
   # get 'pages/signin', to: 'pages#signin'
 
   resources :photos, only: [:index]
-  # resources :places, only: [:index, :show]
+  resources :places, only: [:index, :show]
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
