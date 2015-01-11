@@ -1,0 +1,19 @@
+<p>Hello from angular2 {{messageFromController}}</p>
+
+<div class='row'>
+  <div class='col-md-4' ng-repeat="photo in photos">
+    <div class='item'>
+      <div class='align-center'>
+        <h3>{{photo.place.name}}</h3>
+        <img ng-src="{{photo.image_low_resolution}}">
+        <br>
+        <!-- ="#{time_ago_in_words(photo.updated_at)} ago" -->
+        <!-- %br -->
+        <h4>{{photo.place.vicinity}}</h4>
+        <h5>{{photo.place.city_name}}</h5>
+<!--         %button.btn.show-map{ 'data-latitude'=>photo.place.latitude, 'data-longitude'=>photo.place.longitude,  'data-toggle'=>'modal', 'data-target'=>'#map-modal' }
+          .fa.fa-map-marker
+ -->      </div>
+    </div>
+  </div>
+</div>
