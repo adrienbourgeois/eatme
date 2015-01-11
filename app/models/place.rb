@@ -33,8 +33,8 @@ class Place < ActiveRecord::Base
   # ----------------------------------------------------------------
   # Associations
   # ----------------------------------------------------------------
-  has_many :photos
-  has_many :reviews
+  has_many :photos, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   cattr_accessor :filter_keyword
   RADIUS = [0.1,0.3,0.6,1.0,1.5,2.0,3.0,5.0]
@@ -45,7 +45,7 @@ class Place < ActiveRecord::Base
     ids_array.map { |i| places.select { |p| p.id == i }[0] }
   end
 
-  def self.close(latitude,longitude,radius,filter_keyword)
+  def self.close(latitude,longitude,radius,filter_keyword = "")
     raise ArgumentError, "The radius is not correct" unless RADIUS.map(&:to_s).include? radius
     raise ArgumentError, "The filter keyword is not correct" unless (Photo::FILTER_KEYWORDS+[""]).include? filter_keyword
     self.near([latitude,longitude], radius).joins(:photos).preload(:photos)

@@ -7,7 +7,7 @@ FactoryGirl.define do
     image_thumbnail "image-test.png"
     instagram_url "http://instagram.com"
     instagram_body_req "instagram_body_req"
-    tags 'tag_example'
+    tags "[\"pizza\"]"
     checked true
     association :place
   end
@@ -21,6 +21,17 @@ FactoryGirl.define do
     longitude '180.0'
     city_code 1
     city_name 'Sydney'
+  end
+
+  factory :user do
+    name 'George Henri'
+  end
+
+  factory :review do
+    association :user
+    association :place
+    rate 3
+    body 'awesome'
   end
 
 end
