@@ -1,7 +1,7 @@
 controllers = angular.module('controllers')
 
 controllers.controller 'ClosePlacesCtrl',
-['$scope','PlacesSvc','MapSvc',($scope,PlacesSvc,MapSvc) ->
+['$scope','$timeout','PlacesSvc','MapSvc',($scope,$timeout,PlacesSvc,MapSvc) ->
   currentPage = 1
   $scope.loading = loading = false
 
@@ -27,6 +27,14 @@ controllers.controller 'ClosePlacesCtrl',
   ]
   $scope.currentFilterKeyword = ''
 
+  # Little nasty trick to wait for the animation to complete
+  # It would be a lot better to get the promise of the animation and to set loading to false
+  # once the animation is complete
+  setLoading = (val = false) ->
+    $timeout(->
+      loading = false
+    ,2000)
+
   $scope.init = ->
     loading = true
     currentPage = 1
@@ -35,7 +43,7 @@ controllers.controller 'ClosePlacesCtrl',
         console.log 'places'
         console.log places
         $scope.places = places
-        loading = false
+        setLoading()
     )
 
   # Load more pictures (triggered when user reaches the bottom of the page)
@@ -46,7 +54,7 @@ controllers.controller 'ClosePlacesCtrl',
       PlacesSvc.close($scope.currentRadi,$scope.currentFilterKeyword,currentPage).then(
         (places) ->
           $scope.places = $scope.places.concat(places)
-          loading = false
+          setLoading()
       )
 
   $scope.showWarningMessage = ->

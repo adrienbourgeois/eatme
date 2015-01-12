@@ -9,7 +9,7 @@
       <select ng-model='currentRadi' ng-options="radi as radi for radi in radius" class='form-control' ng-change="init()"></select>
     </div>
   </div>
-  <div row ng-repeat="place in places">
+  <div class='row dish-listing' ng-repeat="place in places">
     <div class='item align-center'>
       <h3>{{place.name}}</h3>
       <h4>{{place.vicinity}}</h4>

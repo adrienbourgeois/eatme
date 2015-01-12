@@ -8,7 +8,7 @@ directives.directive 'whenScrolled', ['$window','$document',($window,$document) 
 
     win = angular.element($window)
     win.bind 'scroll', ->
-      if win.height() + win.scrollTop() - getDocHeight() > -200
+      if win.height() + win.scrollTop() - getDocHeight() > -5
         scope.$apply(attr.whenScrolled)
 
 ]
