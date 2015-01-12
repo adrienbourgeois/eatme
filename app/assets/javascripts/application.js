@@ -21,3 +21,4 @@
 //= require_tree ./angular
 //= require turbolinks
 //= require showmap
+//= require header

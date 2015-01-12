@@ -1,6 +1,6 @@
 !!! XML
 !!!
-%html
+%html{ 'ng-app'=>'Eatme' }
 
   %head
     %meta{ 'http-equiv'=>"X-UA-Compatible", content:"IE=edge" }
@@ -25,7 +25,7 @@
           %a.navbar-brand{ href:"#" } Eatme
         .collapse.navbar-collapse#bs-example-navbar-collapse-1
           %ul.nav.navbar-nav
-            %li.active
+            %li
               %a{ href:"/#/close_places" }
                 Close Places
                 %span.sr-only (current)
