@@ -1,17 +1,13 @@
 <div when-scrolled="loadMore()">
-  <p>Hello from angular2 {{messageFromController}}</p>
-
   <div class='row'>
     <div class='col-md-4' ng-repeat="photo in photos">
-      <div class='item'>
+      <div class='item static'>
         <div class='align-center'>
+          <img ng-src="{{photo.image_low_resolution}}" class='dish'>
           <h3>{{photo.place.name}}</h3>
-          <img ng-src="{{photo.image_low_resolution}}">
-          <br>
           <!-- ="#{time_ago_in_words(photo.updated_at)} ago" -->
           <!-- %br -->
-          <h4>{{photo.place.vicinity}}</h4>
-          <h5>{{photo.place.city_name}}</h5>
+          <h4>{{photo.place.vicinity}} ({{photo.place.city_name}})</h4>
           <button class='btn' ng-click="showLocation(photo.place)">
             <span class='fa fa-map-marker'></span>
           </button>

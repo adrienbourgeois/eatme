@@ -10,12 +10,16 @@
     </div>
   </div>
   <div row ng-repeat="place in places">
-    <h3>{{place.name}}</h3>
-    <h4>{{place.vicinity}}</h4>
-    <button class='btn' ng-click="showLocation(place)">
-      <span class='fa fa-map-marker'></span>
-    </button>
-    <img ng-repeat="photo in place.photos_filtered" ng-src="{{photo.image_low_resolution}}">
+    <div class='item align-center'>
+      <h3>{{place.name}}</h3>
+      <h4>{{place.vicinity}}</h4>
+      <button class='btn' ng-click="showLocation(place)">
+        <span class='fa fa-map-marker'></span>
+      </button>
+      <br>
+      <br>
+      <img ng-repeat="photo in place.photos_filtered" ng-src="{{photo.image_thumbnail}}" class='dish'>
+    </div>
   </div>
   <div ng-show="showWarningMessage()">
     <br>
