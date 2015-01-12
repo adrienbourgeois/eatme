@@ -16,6 +16,7 @@
 //= require twitter/bootstrap
 //= require angular
 //= require angular-route
+//= require angular-animate
 //= require ui-bootstrap-tpls-0.12.0
 //= require angular-google-maps
 //= require_tree ./angular

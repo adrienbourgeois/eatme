@@ -5,6 +5,7 @@ controllers = angular.module('controllers',[])
 app = angular.module("Eatme",
   [
     'ngRoute'
+    'ngAnimate'
     'ui.bootstrap'
     'uiGmapgoogle-maps'
     'services'
