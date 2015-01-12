@@ -5,8 +5,11 @@ class PlacesController < ApplicationController
   def index
     latitude = params[:latitude]
     longitude = params[:longitude]
-    @places = Place.page(params[:page]).per(PER_PAGE).close(coordinates[0], coordinates[1], "5.0")#, (params[:filter_keyword])
-    Place.filter_keyword = params[:filter_keyword]
+    radius = params[:radius]
+    filter_keyword = params[:filter_keyword]
+
+    @places = Place.page(params[:page]).per(PER_PAGE).close(latitude, longitude, radius, filter_keyword)
+    Place.filter_keyword = filter_keyword
     @places = @places.to_json(methods: :photos_filtered)
     render json: @places
 

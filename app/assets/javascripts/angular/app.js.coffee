@@ -18,6 +18,9 @@ app.config ($routeProvider,$httpProvider,uiGmapGoogleMapApiProvider) ->
     .when '/lastly_eaten',
       controller: 'EtmLastEaten2Ctrl'
       templateUrl: '/assets/etm_last_eaten.html'
+    .when '/close_places',
+      controller: 'ClosePlacesCtrl'
+      templateUrl: '/assets/close_places.html'
     .otherwise
       redirectTo: '/lastly_eaten'
 
