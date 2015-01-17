@@ -24,6 +24,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails', '3.1.0'
   gem 'teaspoon', '~> 0.8.0'
+  gem 'phantomjs', '~> 1.9.7.1'
 end
 
 group :production do
