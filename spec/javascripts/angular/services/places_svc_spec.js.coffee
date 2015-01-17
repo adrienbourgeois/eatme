@@ -8,11 +8,6 @@ describe 'PlacesSvc', ->
   _GeoLocationSvc = null
 
   beforeEach(module('Eatme'))
-  beforeEach ->
-    this.addMatchers({
-      toEqualData: (expected) ->
-        return angular.equals(this.actual, expected)
-    })
   beforeEach(inject ($httpBackend, PlacesSvc, GeoLocationSvc) ->
     mockBackend = $httpBackend
     _PlacesSvc = PlacesSvc
