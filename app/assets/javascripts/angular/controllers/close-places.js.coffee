@@ -2,7 +2,7 @@ controllers = angular.module('controllers')
 
 controllers.controller 'ClosePlacesCtrl',
 ['$scope','$timeout','PlacesSvc','MapSvc','LoadingSvc',($scope,$timeout,PlacesSvc,MapSvc,LoadingSvc) ->
-  currentPage = 1
+  $scope.currentPage = 1
 
   $scope.radius = [0.1,0.3,0.6,1.0,1.5,2.0,3.0,5.0]
   $scope.currentRadi = 0.3
@@ -24,12 +24,11 @@ controllers.controller 'ClosePlacesCtrl',
     'icecream',
     'french'
   ]
-  $scope.currentFilterKeyword = ''
 
   $scope.init = ->
     LoadingSvc.setLoading(true)
-    currentPage = 1
-    PlacesSvc.close($scope.currentRadi,$scope.currentFilterKeyword,currentPage).then(
+    $scope.currentPage = 1
+    PlacesSvc.close($scope.currentRadi,$scope.currentFilterKeyword,$scope.currentPage).then(
       (places) ->
         console.log 'places'
         console.log places
@@ -41,8 +40,8 @@ controllers.controller 'ClosePlacesCtrl',
   $scope.loadMore = ->
     unless LoadingSvc.isLoading()
       LoadingSvc.setLoading(true)
-      currentPage += 1
-      PlacesSvc.close($scope.currentRadi,$scope.currentFilterKeyword,currentPage).then(
+      $scope.currentPage += 1
+      PlacesSvc.close($scope.currentRadi,$scope.currentFilterKeyword,$scope.currentPage).then(
         (places) ->
           $scope.places = $scope.places.concat(places)
           LoadingSvc.setLoading(false,2000)

@@ -6,6 +6,7 @@ app = angular.module("Eatme",
   [
     'ngRoute'
     'ngAnimate'
+    'ngMock'
     'ui.bootstrap'
     'uiGmapgoogle-maps'
     'services'
