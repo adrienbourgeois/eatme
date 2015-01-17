@@ -1,7 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'instagram_listener'
-require 'pp'
 include InstagramListener
+
+# TODO: refactor
 
 describe "InstagramListener" do
 

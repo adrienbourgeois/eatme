@@ -3,7 +3,7 @@ class PhotosController < ApplicationController
   PER_PAGE = 9
 
   def index
-    @photos = Photo.order(id: :desc).checked.page(params[:page]).per(PER_PAGE)
+    @photos = Photo.page(params[:page]).per(PER_PAGE).order(id: :desc).checked
 
     respond_to do |format|
       format.html

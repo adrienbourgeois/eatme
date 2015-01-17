@@ -54,7 +54,7 @@ feature "Close Places", js: true  do
         it 'shows restaurants in the area' do
           # select "pizza", from: 'filter-keyword'
           visit "/#/close_places"
-          sleep 10.0
+          sleep 6.0
           expect(page).to have_content("Adriatic Restaurant")
         end
 
@@ -62,14 +62,14 @@ feature "Close Places", js: true  do
           it 'shows restaurants with the tag' do
             visit "/#/close_places"
             select "pizza", from: 'filter-keyword'
-            sleep 10.0
+            sleep 6.0
             expect(page).to have_content("Adriatic Restaurant")
           end
 
           it 'does not show restaurants without the tag' do
             visit "/#/close_places"
             select "ribs", from: 'filter-keyword'
-            sleep 10.0
+            sleep 6.0
             expect(page).to_not have_content("Adriatic Restaurant")
           end
         end
@@ -84,7 +84,7 @@ feature "Close Places", js: true  do
 
         it 'does not show any restaurant' do
           visit "/#/close_places"
-          sleep 10.0
+          sleep 6.0
           expect(page).to_not have_content("Adriatic Restaurant")
         end
       end
