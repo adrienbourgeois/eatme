@@ -2,9 +2,9 @@ FactoryGirl.define do
 
   factory :photo do
     sequence(:instagram_id) { |n| n }
-    image_low_resolution "image-test.png"
-    image_standard_resolution "image-test.png"
-    image_thumbnail "image-test.png"
+    image_low_resolution "/assets/image-test.jpg"
+    image_standard_resolution "/assets/image-test.jpg"
+    image_thumbnail "/assets/image-test.jpg"
     instagram_url "http://instagram.com"
     instagram_body_req "instagram_body_req"
     tags "[\"pizza\"]"

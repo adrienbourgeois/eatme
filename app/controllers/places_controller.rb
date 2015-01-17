@@ -8,6 +8,7 @@ class PlacesController < ApplicationController
     radius = params[:radius]
     filter_keyword = params[:filter_keyword]
 
+
     @places = Place.page(params[:page]).per(PER_PAGE).close(latitude, longitude, radius, filter_keyword)
     Place.filter_keyword = filter_keyword
     @places = @places.to_json(methods: :photos_filtered)

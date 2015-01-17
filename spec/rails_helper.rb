@@ -1,6 +1,9 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
+require 'capybara'
+require 'support/tools'
+require 'support/selenium_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -33,6 +36,24 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  config.include SeleniumHelper#, :type => :request
+  
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+ 
+  config.before(:each, js: true) do
+    DatabaseCleaner.start
+  end
+ 
+  config.after(:each, js: true) do
+    DatabaseCleaner.clean
+  end
+
+  # config.before(:each, :js => true) do
+  #   DatabaseCleaner.strategy = :truncation
+  # end
+
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
@@ -48,3 +69,14 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 end
+
+# Definition of new driver for capybara that stub the html5 geolocation
+Capybara.register_driver :stub_geolocation do |app|
+  require 'selenium/webdriver'
+  profile = Selenium::WebDriver::Firefox::Profile.new
+  profile['geo.prompt.testing'] = true
+  profile['geo.prompt.testing.allow'] = true
+  profile['geo.wifi.uri'] = 'data:application/json,{"location":{"lat":-33.0,"lng":181.0,"accuracy":10}}'
+  Capybara::Selenium::Driver.new(app, :profile => profile)
+end
+

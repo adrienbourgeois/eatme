@@ -37,6 +37,8 @@ group :test do
   # gem 'guard-rspec'
   gem 'selenium-webdriver', '~> 2.44.0'
   gem 'capybara', '2.4.4'
+  gem 'capybara-angular', '~> 0.1.0'
+  gem 'database_cleaner', '~> 1.4.0'
 end
 
 # Use Uglifier as compressor for JavaScript assets
