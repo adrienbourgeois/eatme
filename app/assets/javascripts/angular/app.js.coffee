@@ -17,7 +17,7 @@ app = angular.module("Eatme",
 app.config ($routeProvider,$httpProvider,uiGmapGoogleMapApiProvider) ->
   $routeProvider
     .when '/lastly_eaten',
-      controller: 'EtmLastEaten2Ctrl'
+      controller: 'LastEatenCtrl'
       templateUrl: '/assets/etm_last_eaten.html'
     .when '/close_places',
       controller: 'ClosePlacesCtrl'
