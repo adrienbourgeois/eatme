@@ -33,9 +33,9 @@ group :production do
 end
 
 group :test do
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '~> 4.5.0'
   # gem 'guard-rspec'
-  # gem 'selenium-webdriver', '2.35.1'
+  gem 'selenium-webdriver', '~> 2.44.0'
   gem 'capybara', '2.4.4'
 end
 
