@@ -1,0 +1,25 @@
+<div when-scrolled="loadMore()">
+  <!-- <input type='text' ng-model='filter' class='form-control' placeholder='Search...' /> -->
+  <div class='row'>
+    <div class='col-md-4 dish-listing' ng-repeat="photo in photos | filter:filter">
+      <div class='item static'>
+        <div class='align-center'>
+          <img ng-src="{{photo.image_low_resolution}}" class='dish'>
+          <h3>{{photo.place.name}}</h3>
+          <!-- ="#{time_ago_in_words(photo.updated_at)} ago" -->
+          <!-- %br -->
+          <div class='row'>
+            <div class='col-xs-10'>
+              <h4>{{photo.place.vicinity}} ({{photo.place.city_name}})</h4>
+            </div>
+            <div class='col-xs-2'>
+              <button class='btn' ng-click="showLocation(photo.place)">
+                <span class='fa fa-map-marker'></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
