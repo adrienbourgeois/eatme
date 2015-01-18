@@ -5,10 +5,9 @@ controllers.controller 'ClosePlacesCtrl',
   $scope.currentPage = 1
 
   $scope.radius = [0.1,0.3,0.6,1.0,1.5,2.0,3.0,5.0]
-  $scope.currentRadi = 0.3
+  $scope.currentRadi = 1.5
 
   $scope.filterKeywords = [
-    '',
     'glutenfree',
     'dessert',
     'bbq',
@@ -24,7 +23,7 @@ controllers.controller 'ClosePlacesCtrl',
     'icecream',
     'french'
   ]
-  $scope.currentFilterKeyword = ''
+  $scope.currentFilterKeyword = 'pizza'
 
   $scope.init = ->
     LoadingSvc.setLoading(true)

@@ -16,7 +16,7 @@ describe 'ClosePlacesCtrl', ->
       expect($scope.radius).to.eql([0.1,0.3,0.6,1.0,1.5,2.0,3.0,5.0])
 
     it "sets currentRadi", ->
-      expect($scope.currentRadi).to.eql(0.3)
+      expect($scope.currentRadi).to.eql(1.5)
 
     it "sets filterKeywords", ->
       expect($scope.filterKeywords).to.not.be(undefined)
